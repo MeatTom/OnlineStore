@@ -1,0 +1,147 @@
+.sideCart{
+    display: none;
+.drawer_shadow{
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.1s ease-out, visibility 0.1s ease-out;
+  overflow: visible;
+  border-radius: 10px;
+
+  .drawer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 72px 8px 8px;
+    gap: 10px;
+    background: #E5E5E5;
+    position: absolute;
+    width: 410px;
+    height: 945px;
+    left: 855px;
+    top: 0;
+    border-radius: 10px;
+    z-index: 1000;
+    box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+
+    h1{
+      margin-bottom: 50px;
+    }
+    .closeCart{
+      display: flex;
+      justify-content: right;
+      position: absolute;
+      right: 30px;
+      top: 30px;
+      cursor: pointer;
+      rect{
+        transition: fill 0.3s ease-in-out;
+        &:hover{
+          fill: rgba(60,63,65,0.14);
+          cursor: pointer;
+        }
+      }
+    }
+    .drawer_line{
+      position: absolute;
+      width: 920px;
+      height: 0;
+      left: -460px;
+      top: 510px;
+      border: 4px solid rgba(26, 31, 22, 0.5);
+      transform: rotate(90deg);
+      z-index: 1000;
+    }
+
+    .cartItems{
+      flex: 1;
+    }
+    .cartItem{
+      display: flex;
+      flex: 1;
+      border: 1px solid rgba(225,146,128,0.36);
+      border-radius: 20px;
+      padding: 20px;
+      overflow: hidden;
+      background: rgba(225,146,128,0.20) ;
+      margin-bottom: 25px;
+
+      img{
+        flex: 1;
+        margin-right: 10px;
+        margin-left: 0;
+        width: 80px;
+        height: 110px;
+        background: #FFFFFF;
+        border-radius: 22px;
+      }
+
+      p{
+        margin-bottom: 10px;
+        left: 100px;
+        flex: 1;
+        width: 60%;
+      }
+
+      b{
+        display: flex;
+        margin-top: 15px;
+      }
+
+      .delButton{
+        cursor: pointer;
+        margin-left: 70px;
+        margin-top: 40px;
+        transition: opacity 0.2s ease-in-out;
+        opacity: 0.5;
+        &:hover{
+          opacity: 1;
+        }
+      }
+    }
+    .bottomCart{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 15px;
+      p{
+        font-size: 30px;
+        line-height: 24px;
+      }
+      .CheckoutButton{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 8px 24px;
+        gap: 8px;
+        width: 161px;
+        height: 40px;
+        background: #1A1F16;
+        border-radius: 14px;
+
+        transition: background-color 0.3s ease-in-out;
+        &:hover{
+          background-color: rgba(225,146,128,0.60);
+          cursor: pointer;
+        }
+
+        p{
+          font-style: normal;
+          font-weight: 500;
+          font-size: 20px;
+          line-height: 24px;
+          color: #FFFFFF;
+        }
+      }
+    }
+  }
+}
+}

@@ -1,0 +1,63 @@
+.item {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+
+  display: flex;
+  flex-direction: column;
+  margin: 20px 20px 50px 43px;
+
+  .image_wrapper {
+    transition: box-shadow 0.15s ease-in-out;
+
+    &:hover {
+      box-shadow: 0 10px 5px rgba(0, 0, 0, 0.5);
+      border-radius: 22px;
+    }
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 250px;
+    height: 250px;
+
+    background: #FFFFFF;
+    border-radius: 22px;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      margin-bottom: 20px;
+    }
+  }
+
+  .itemName {
+    margin-left: 15px;
+    max-width: 235px;
+
+    p {
+      font-size: 20px;
+    }
+  }
+
+  .itemDescription {
+    p {
+      font-size: 18px;
+      opacity: 0.8;
+      margin-bottom: 0;
+    }
+
+    b {
+      font-size: 20px;
+    }
+
+    .addToCart {
+      position: relative;
+      cursor: pointer;
+      left: 65%;
+    }
+  }
+}

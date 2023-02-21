@@ -1,0 +1,43 @@
+header{
+
+  margin: 43px 45px 45px 45px;
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 30px;
+  border-bottom: 1px solid slategrey ;
+
+  .header_left{
+    display: flex;
+    align-items: center;
+
+    h1, p{
+      margin: 0;
+    }
+
+    img{
+      margin-right: 30px;
+      margin-left: 20px;
+    }
+
+  }
+
+  .header_right {
+    display: flex;
+    list-style: none;
+    img {
+      cursor: pointer;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      margin-left: 20px;
+    }
+    li:last-child{
+      margin-right: 30px;
+    }
+    p{
+      display: inline-block;
+      margin-left: 10px;
+    }
+  }
+}

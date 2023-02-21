@@ -1,5 +1,6 @@
 const express = require('express')
 const router = require('./routes/userRouters')
+//const {callback} = require("pg/lib/native/query");
 require('dotenv').config()
 const PORT = process.env.PORT
 const app = express()
@@ -14,6 +15,7 @@ app.listen(PORT, (err) => {
    } 
    console.log('Server successfully started')
 })
+
 
 
 
