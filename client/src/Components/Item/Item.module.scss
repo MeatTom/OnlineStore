@@ -58,6 +58,24 @@
       position: relative;
       cursor: pointer;
       left: 65%;
+
+      rect {
+        transition: all 0.2s ease-in-out;
+        fill: #1A1F16;
+      }
+    }
+
+    .addedToCart {
+      position: relative;
+      cursor: pointer;
+      left: 65%;
+      transition: all 0.2s ease-in-out;
+
+      rect {
+        transition: all 0.2s ease-in-out;
+        fill: #FF8585;
+      }
+
+      }
     }
   }
-}

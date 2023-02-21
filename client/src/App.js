@@ -1,4 +1,5 @@
 import './index.scss';
+import React  from "react";
 import Item from './Components/Item/Item'
 import Header from "./Components/Header/header";
 import SideCart from "./Components/SideCart/SideCart";
@@ -12,10 +13,11 @@ const arr =[
 ];
 
 function App() {
+    const [cartIsOpen, setCartIsOpen] = React.useState(false)
     return (
         <div className="Wrapper">
-            <Header/>
-            <SideCart/>
+            <Header onClickedCart={() => setCartIsOpen(true)} />
+            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)}/>}
             <Search/>
         <div className="main_content">
             <div className="socks">

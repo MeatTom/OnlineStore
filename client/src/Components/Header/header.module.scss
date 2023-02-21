@@ -24,6 +24,11 @@ header{
   .header_right {
     display: flex;
     list-style: none;
+
+    .cart_icon{
+      cursor: pointer;
+    }
+
     img {
       cursor: pointer;
     }
