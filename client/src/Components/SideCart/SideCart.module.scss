@@ -23,12 +23,13 @@
     background: #E5E5E5;
     position: absolute;
     width: 410px;
-    height: 945px;
+    height: 93.5%;
     left: 855px;
     top: 0;
     border-radius: 10px;
     z-index: 1000;
     box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+
 
     h1{
       margin-bottom: 50px;
@@ -53,14 +54,16 @@
       width: 920px;
       height: 0;
       left: -460px;
-      top: 510px;
-      border: 4px solid rgba(26, 31, 22, 0.5);
+      top: 50%;
+      border: 4px solid rgba(133,133,133,0.90);
       transform: rotate(90deg);
       z-index: 1000;
     }
 
     .cartItems{
       flex: 1;
+      overflow-x: auto;
+
     }
     .cartItem{
       display: flex;
@@ -71,13 +74,14 @@
       overflow: hidden;
       background: rgba(225,146,128,0.20) ;
       margin-bottom: 25px;
+      margin-left: 5px;
 
       img{
         flex: 1;
         margin-right: 10px;
         margin-left: 0;
         width: 80px;
-        height: 110px;
+        height: 130px;
         background: #FFFFFF;
         border-radius: 22px;
       }

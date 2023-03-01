@@ -2,12 +2,12 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const SECRET = process.env.SECRET
 const bcrypt = require('bcrypt')
-const pool = require('../models/User')
+const pool = require('../models/db');
 
 //регистрация пользователя
 const registration = async (req, res) => {
     try{
-        const {  name, email, password } = req.body;
+        const { name, email, password } = req.body;
         const salt = await bcrypt.genSalt(10)
         const passwordHash = await bcrypt.hash(password, salt)
         

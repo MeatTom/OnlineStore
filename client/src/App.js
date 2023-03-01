@@ -1,35 +1,63 @@
 import './index.scss';
-import React  from "react";
+import React from "react";
 import Item from './Components/Item/Item'
 import Header from "./Components/Header/header";
 import SideCart from "./Components/SideCart/SideCart";
-import Search from "./Components/Search/Search";
-
-const arr =[
-    {name: 'SinSay "Funny-Taco socks"' , price: 10, imageUrl: "/statics/Socks/Socks2.png"},
-    {name: 'TOEI "DreamHome socks"' , price: 12,  imageUrl: "/statics/Socks/Socks3.png"},
-    {name: 'Jaws "Room Monster socks"' , price: 7,  imageUrl: "/statics/Socks/Socks5.png"},
-    {name: 'SinSay "Halloween socks"' , price: 5,  imageUrl: "/statics/Socks/Socks4.png"}
-];
+import axios from 'axios';
 
 function App() {
+    let [item, setItem] = React.useState([])
+    let [cartItems, setCartItems] = React.useState([])
+    let [searchBar, setSearchBar] = React.useState('')
     const [cartIsOpen, setCartIsOpen] = React.useState(false)
+
+    React.useEffect(() => {
+        axios.get('http://localhost:5000/tovars')
+            .then((response) => {
+                setItem(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    const onAddToCart = (obj) => {
+        console.log(obj.id)
+        axios.post('http://localhost:5000/cart', { ...obj, id: obj.id })
+            .then(response => {
+                setCartItems(prev => [...prev, response.data]);
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
+
+    const onChangeSearchBar = (event) => {
+        setSearchBar(event.target.value)
+    }
+
     return (
         <div className="Wrapper">
-            <Header onClickedCart={() => setCartIsOpen(true)} />
-            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)}/>}
-            <Search/>
-        <div className="main_content">
-            <div className="socks">
-                {
-                    arr.map((obj) =>
-                        <Item name={obj.name} price={obj.price} imageURL={obj.imageUrl}/>
-                    )
-                }
+            <Header onClickedCart={() => setCartIsOpen(true)}/>
+            {cartIsOpen && <SideCart item={cartItems} onClosedCart={() => setCartIsOpen(false)}/>}
+            <div className="Search">
+                <p>Search Item</p>
+                <input onChange={onChangeSearchBar} placeholder="Halloween socks..." className="Search_bar"/>
+            </div>
+            <div className="main_content">
+                <div className="socks">
+                    {
+                        item.filter(item => item.name.toLowerCase().includes(searchBar.toLowerCase())).map((item) =>
+                            <Item key={item.id} id={item.id}
+                            name={item.name} price={item.price} imageURL = {item.image.replace(/\\/g, "/")}
+                            onPlus = {() => onAddToCart(item)}/>
+                        )
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    )
+    );
 }
 
 export default App;
+
