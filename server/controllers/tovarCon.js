@@ -48,7 +48,8 @@ const addProduct = async (req, res) => {
 
                 const imagePath = 'http://localhost:5000/' + image.path.replace(/\\/g, '/');
 
-                const result = await pool.query('INSERT INTO online_store.tovar (name, description, price, image) VALUES ($1, $2, $3, $4) RETURNING *', [name, description, price, imagePath]);
+                const result = await pool.query
+                ('INSERT INTO online_store.tovar (name, description, price, image) VALUES ($1, $2, $3, $4) RETURNING *', [name, description, price, imagePath]);
                 const tovar = result.rows[0];
 
                 res.json(tovar);
@@ -166,7 +167,6 @@ const updateProductInfo = async (req, res) => {
                     'UPDATE online_store.tovar SET name = $1, description = $2, price = $3',
                     [tovar.name, tovar.description, tovar.price]
                 );
-
                 res.json(tovar);
             });
         } catch (error) {

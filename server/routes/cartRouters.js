@@ -1,7 +1,6 @@
 const cartController = require('../controllers/cartCon')
 const express = require('express');
 const router = express.Router();
-//const pool = require('../models/db');
 
 router.post('/cart', async (req, res) => {
     const item = req.body;
@@ -35,6 +34,28 @@ router.delete('/show_cart/delete/:id', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Internal server error' });
+    }
+});
+
+router.put('/show_cart/decrement/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        await cartController.decrementCartItem(id);
+        res.status(200).json({ message: `Item with id ${id} has been decremented` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
+    }
+});
+
+router.put('/show_cart/increment/:id', async (req, res) => {
+    try {
+        const itemId = req.params.id;
+        await cartController.incrementCartItem(itemId);
+        res.status(200).json({ message: `Item with id ${itemId} has been incremented` });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error' });
     }
 });
 

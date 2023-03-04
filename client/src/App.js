@@ -1,6 +1,6 @@
-import './index.scss';
+import './App.scss';
 import React from "react";
-import Item from './Components/Item/Item'
+import Item from './Components/Item/Item';
 import Header from "./Components/Header/header";
 import SideCart from "./Components/SideCart/SideCart";
 import axios from 'axios';

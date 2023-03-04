@@ -1,5 +1,7 @@
 # OnlineStore "Heaven Socks"
-Автор: Косинов Дмитрий
+### Автор: студент Косинов Дмитрий 
+### Группа: ИР-20-4
+
 
 Backend часть создаётся с использованием node.js + express и БД postgreSQL
 

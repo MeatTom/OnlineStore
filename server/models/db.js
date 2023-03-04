@@ -42,7 +42,7 @@ pool.query(`
     CREATE TABLE IF NOT EXISTS online_store.cart(
     id SERIAL PRIMARY KEY,
     itemId INTEGER NOT NULL,
-    amount INTEGER NOT NULL,
+    amount INTEGER NOT NULL DEFAULT 1,
     FOREIGN KEY (itemId) REFERENCES online_store.tovar(id) ON DELETE CASCADE
   )`,
     (err) => {

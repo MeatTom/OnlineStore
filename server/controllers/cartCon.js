@@ -64,6 +64,41 @@ async function deleteCartItem(id) {
     }
 }
 
-module.exports = {addToCart, getCartItems, deleteCartItem}
+const decrementCartItem = async (itemId) => {
+    try {
+        const client = await pool.connect();
+        await client.query('BEGIN');
+        const result = await client.query('UPDATE online_store.cart SET amount = amount - 1 WHERE itemId = $1 RETURNING amount', [itemId]);
+        if (result.rowCount === 0) {
+            throw new Error(`Cart item with id ${itemId} not found`);
+        } else if (result.rows[0].amount === 0) {
+            await client.query('DELETE FROM online_store.cart WHERE itemId = $1', [itemId]);
+        }
+        await client.query('COMMIT');
+        client.release();
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to decrement cart item');
+    }
+};
+
+const incrementCartItem = async (itemId) => {
+    try {
+        const client = await pool.connect();
+        await client.query('BEGIN');
+        const result = await client.query('UPDATE online_store.cart SET amount = amount + 1 WHERE itemId = $1 RETURNING amount', [itemId]);
+        if (result.rowCount === 0) {
+            throw new Error(`Cart item with id ${itemId} not found`);
+        }
+        await client.query('COMMIT');
+        client.release();
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to increment cart item');
+    }
+};
+
+
+module.exports = {addToCart, getCartItems, deleteCartItem, incrementCartItem, decrementCartItem}
 
 
