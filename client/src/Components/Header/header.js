@@ -1,4 +1,5 @@
 import headerStyle from './header.module.scss'
+import React from "react";
 
 function Header (props) {
     return(
@@ -15,7 +16,6 @@ function Header (props) {
         <ul className={headerStyle.header_right}>
             <li>
                 <img onClick={props.onClickedCart} className={headerStyle.cart_icon} width="23px" src="/statics/cart.svg" alt="cart"/>
-                <p>$ 0 </p>
             </li>
             <li>
                 <img width="30px" src="/statics/profile.svg" alt="profile"/>

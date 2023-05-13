@@ -1,4 +1,4 @@
-const pool = require('../models/db');
+const {Tovar} = require('../models/db');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
@@ -48,9 +48,12 @@ const addProduct = async (req, res) => {
 
                 const imagePath = 'http://localhost:5000/' + image.path.replace(/\\/g, '/');
 
-                const result = await pool.query
-                ('INSERT INTO online_store.tovar (name, description, price, image) VALUES ($1, $2, $3, $4) RETURNING *', [name, description, price, imagePath]);
-                const tovar = result.rows[0];
+                const tovar = await Tovar.create({
+                    name,
+                    description,
+                    price,
+                    image: imagePath,
+                });
 
                 res.json(tovar);
             });
@@ -62,8 +65,7 @@ const addProduct = async (req, res) => {
 
 const getAllTovars = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM online_store.tovar');
-        const tovary = result.rows;
+        const tovary = await Tovar.findAll();
         res.json(tovary);
     } catch (error) {
         console.log(error);
@@ -74,8 +76,7 @@ const getAllTovars = async (req, res) => {
 const getTovar = async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query('SELECT * FROM online_store.tovar WHERE id = $1', [id]);
-        const tovar = result.rows[0];
+        const tovar = await Tovar.findOne({ where: { id } });
 
         if (!tovar) {
             return res.status(404).json({ message: 'Product not found' });
@@ -90,8 +91,7 @@ const getTovar = async (req, res) => {
 
 const updateProductImage = async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM online_store.tovar WHERE id = $1', [req.params.id]);
-        const tovar = result.rows[0];
+        const tovar = await Tovar.findOne({ where: { id: req.params.id } });
 
         if (!tovar) {
             return res.status(404).json({ message: 'Product not found' });
@@ -128,8 +128,7 @@ const updateProductImage = async (req, res) => {
 
             tovar.image = 'http://localhost:5000/' + req.file.path.replace(/\\/g, '/');
 
-            await pool.query('UPDATE online_store.tovar SET image = $1 WHERE id = $2',
-                [tovar.image, tovar.id]);
+            await tovar.save();
 
             res.json(tovar);
         });
@@ -152,8 +151,7 @@ const updateProductInfo = async (req, res) => {
 
                 const { name, description, price } = fields;
 
-                const result = await pool.query('SELECT * FROM online_store.tovar WHERE id = $1', [req.params.id]);
-                const tovar = result.rows[0];
+                const tovar = await Tovar.findByPk(req.params.id);
 
                 if (!tovar) {
                     return res.status(404).json({ message: 'Product not found' });
@@ -163,10 +161,8 @@ const updateProductInfo = async (req, res) => {
                 tovar.description = description || tovar.description;
                 tovar.price = price || tovar.price;
 
-                await pool.query(
-                    'UPDATE online_store.tovar SET name = $1, description = $2, price = $3',
-                    [tovar.name, tovar.description, tovar.price]
-                );
+                await tovar.save();
+
                 res.json(tovar);
             });
         } catch (error) {
@@ -178,8 +174,7 @@ const updateProductInfo = async (req, res) => {
 
 const deleteTovar = async (req, res) => {
         try {
-            const result = await pool.query('SELECT * FROM online_store.tovar WHERE id = $1', [req.params.id]);
-            const tovar = result.rows[0];
+            const tovar = await Tovar.findByPk(req.params.id);
 
             if (!tovar) {
                 return res.status(404).json({message: 'Product not found'});
@@ -189,8 +184,7 @@ const deleteTovar = async (req, res) => {
                 fs.unlinkSync(path.join(__dirname, '..', tovar.image));
             }
 
-            await pool.query('DELETE FROM online_store.tovar WHERE id = $1', [req.params.id]);
-            res.json({message: 'Product deleted successfully'});
+            await tovar.destroy();
         } catch (error) {
             console.log(error);
             res.status(500).json({message: 'Server error'});

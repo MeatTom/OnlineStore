@@ -1,56 +1,89 @@
-const { Pool } = require('pg');
+const { Sequelize } = require ('sequelize')
+const { DataTypes } = require ('sequelize')
 
-const pool = new Pool({
+const sequelize = new Sequelize('socks_store', 'postgres', 'mitron16', {
     host: 'localhost',
-    port: 5432,
-    user: 'postgres',
-    password: 'mitron16',
-    database: 'online_store'
+    dialect: 'postgres',
 });
 
-pool.query(`
-  CREATE SCHEMA IF NOT EXISTS online_store;
-  CREATE TABLE IF NOT EXISTS online_store.users (
-  id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password VARCHAR(255) NOT NULL
-)`, (err) => {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log('Table users created successfully');
-    }
+const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+    },
+    password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
 });
 
-pool.query(`
-    CREATE TABLE IF NOT EXISTS online_store.tovar(
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description VARCHAR(255),
-    price NUMERIC(10, 2) NOT NULL,
-    image TEXT
-  )`, (err) => {
-    if (err) {
-        console.error(err);
-    } else {
-        console.log('Table tovar created successfully');
-    }
+const Tovar = sequelize.define('Tovars', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    description: {
+        type: DataTypes.STRING,
+    },
+    price: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+    },
+    image: {
+        type: DataTypes.TEXT,
+    },
 });
 
-pool.query(`
-    CREATE TABLE IF NOT EXISTS online_store.cart(
-    id SERIAL PRIMARY KEY,
-    itemId INTEGER NOT NULL,
-    amount INTEGER NOT NULL DEFAULT 1,
-    FOREIGN KEY (itemId) REFERENCES online_store.tovar(id) ON DELETE CASCADE
-  )`,
-    (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Table cart created successfully');
-        }
-    });
+const Cart = sequelize.define('Cart', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    itemId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Tovar,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
+    amount: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+    },
+});
 
-module.exports = pool;
+Tovar.hasMany(Cart, { foreignKey: 'itemId' });
+Cart.belongsTo(Tovar, { foreignKey: 'itemId' });
+
+User.sync().then(() => {
+    console.log('Table users created successfully');
+});
+
+Tovar.sync().then(() => {
+    console.log('Table tovar created successfully');
+});
+
+Cart.sync().then(() => {
+    console.log('Table cart created successfully');
+});
+
+module.exports = { User, Tovar, Cart };

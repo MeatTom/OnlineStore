@@ -43,7 +43,7 @@ const registration = async (req, res) => {
 const authorization = async (req, res) => {
     try {
         const { email, password } = req.body;
-    
+    щ
         const user = await pool.query(
           'SELECT * FROM online_store.users WHERE email = $1',
           [email]
