@@ -49,6 +49,18 @@ const Tovar = sequelize.define('Tovars', {
     },
 });
 
+const Size = sequelize.define('Size', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    size_name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
+
 const Cart = sequelize.define('Cart', {
     id: {
         type: DataTypes.INTEGER,
@@ -69,10 +81,53 @@ const Cart = sequelize.define('Cart', {
         allowNull: false,
         defaultValue: 1,
     },
+    sizeId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: Size,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
 });
 
+const Stock = sequelize.define('Stock', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    itemId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Tovar,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
+    sizeId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Size,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
+    quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+    },
+});
+
+Size.hasMany(Stock, { foreignKey: 'sizeId' });
+Stock.belongsTo(Size, { foreignKey: 'sizeId' });
 Tovar.hasMany(Cart, { foreignKey: 'itemId' });
 Cart.belongsTo(Tovar, { foreignKey: 'itemId' });
+
 
 User.sync().then(() => {
     console.log('Table users created successfully');
@@ -86,4 +141,12 @@ Cart.sync().then(() => {
     console.log('Table cart created successfully');
 });
 
-module.exports = { User, Tovar, Cart };
+Size.sync().then(() => {
+    console.log('Table size created successfully');
+})
+
+Stock.sync().then(() => {
+    console.log('Table stock created successfully');
+})
+
+module.exports = { User, Tovar, Cart, Size, Stock };

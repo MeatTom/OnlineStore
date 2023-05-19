@@ -36,6 +36,8 @@ async function getCartItems() {
             price: item.Tovar.price,
             image: item.Tovar.image,
             amount: item.amount,
+            sizeId: item.sizeId,
+            itemId: item.itemId,
         }));
 
         return items;
@@ -87,10 +89,50 @@ const incrementCartItem = async (id) => {
     }
 };
 
+const resetCartItemBySize = async (itemId, sizeId) => {
+    try {
+        const cartItem = await Cart.findOne({ where: { itemId, sizeId } });
+        if (!cartItem) {
+            throw new Error(`Cart item with itemId ${itemId} and sizeId ${sizeId} not found`);
+        }
+        await cartItem.update({ amount: 1 });
+    } catch (error) {
+        console.error(error);
+        throw new Error('Failed to reset cart item by size');
+    }
+};
+
+const saveSizeToCart = async (req, res) => {
+    try {
+        const { itemId, sizeId } = req.body;
+
+        const existingCartItem = await Cart.findOne({ where: { itemId } });
+
+        if (existingCartItem && existingCartItem.sizeId === sizeId) {
+            res.send({ success: true, message: 'Размер товара уже сохранен в корзине.' });
+            return;
+        }
+
+        if (existingCartItem) {
+            await resetCartItemBySize(itemId, existingCartItem.sizeId);
+            await existingCartItem.update({ sizeId });
+            res.send({ success: true, message: 'Размер успешно изменен в корзине.' });
+        } else {
+            await Cart.create({ itemId, sizeId, amount: 1 });
+            res.send({ success: true, message: 'Товар добавлен в корзину.'});
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).send({ success: false, error: 'Ошибка при сохранении размера в корзине' });
+    }
+};
+
+
 module.exports = {
     addToCart,
     getCartItems,
     deleteCartItem,
     incrementCartItem,
     decrementCartItem,
+    saveSizeToCart
 };

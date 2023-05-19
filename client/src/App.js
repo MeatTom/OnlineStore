@@ -8,9 +8,9 @@ import Loading from "./Components/Loading/Loading";
 import ScrollToTop from "react-scroll-up";
 
 function App() {
-    let [item, setItem] = React.useState([])
-    let [cartItems, setCartItems] = React.useState([])
-    let [searchBar, setSearchBar] = React.useState('')
+    const [item, setItem] = React.useState([])
+    const [cartItems, setCartItems] = React.useState([])
+    const [searchBar, setSearchBar] = React.useState('')
     const [cartIsOpen, setCartIsOpen] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(true);
     const [displayedItems, setDisplayedItems] = React.useState([]);
@@ -44,7 +44,6 @@ function App() {
         } else {
             document.body.style.overflow = "unset";
         }
-
         return () => {
             document.body.style.overflow = "unset";
         }
@@ -83,7 +82,7 @@ function App() {
                 <span><img src="/statics/ButtonUp.png" alt="UP"/></span>
             </ScrollToTop>
             <Header onClickedCart={() => setCartIsOpen(true)} />
-            {cartIsOpen && <SideCart item={cartItems} onClosedCart={() => setCartIsOpen(false)} />}
+            {cartIsOpen && <SideCart idItem={item.id} item={cartItems} onClosedCart={() => setCartIsOpen(false)} />}
             <div className="Search">
                 <p>Search Item</p>
                 <input onChange={onChangeSearchBar} placeholder="Halloween socks..." className="Search_bar"/>

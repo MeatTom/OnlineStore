@@ -59,4 +59,6 @@ router.put('/show_cart/increment/:id', async (req, res) => {
     }
 });
 
+router.post("/cart/size", cartController.saveSizeToCart);
+
 module.exports = router;

@@ -2,6 +2,8 @@ const express = require('express')
 //const userRouter = require('./routes/userRouters')
 const tovarRouter = require('./routes/tovarRouters')
 const cartRouter = require('./routes/cartRouters')
+const sizeRouter = require('./routes/sizeRouters')
+const stockRouter = require('./routes/stockRouters')
 const cors = require('cors');
 require('dotenv').config()
 const PORT = process.env.PORT
@@ -22,6 +24,8 @@ app.use(express.json());
 //app.use(userRouter);
 app.use(tovarRouter);
 app.use(cartRouter);
+app.use(sizeRouter);
+app.use(stockRouter);
 
 //проверка работы сервера
 app.listen(PORT, (err) => {
