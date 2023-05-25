@@ -1,0 +1,92 @@
+.order_modal {
+  position: absolute;
+  top: 50%;
+  left: 51%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  width: 440px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  border: 0;
+  z-index: 9999;
+}
+
+.order_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.register_message{
+  text-align: center;
+  font-size: 19px;
+  margin-bottom: 40px;
+  margin-right: 15px;
+}
+
+.order_placed_message{
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.order_modal_close{
+  cursor: pointer;
+}
+
+.order_modal h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.order_modal label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.order_modal select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+.order_modal button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #fdab9b;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 13px;
+  width: 45%;
+}
+
+.order_modal button:last-child {
+  margin-right: 0;
+}
+
+.order_modal button:hover {
+  background-color: #e78067;
+  transition: ease-in-out 250ms;
+}
+
+.order_modal input[type="text"]{
+  width: 95%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}

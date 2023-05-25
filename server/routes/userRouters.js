@@ -26,4 +26,6 @@ router.post('/auth/login',  userController.authorization)
 
 router.get('/auth/profile', userController.checkUserInfo)
 
+router.put('/users/:userId', userController.updateUser);
+
 module.exports = router;

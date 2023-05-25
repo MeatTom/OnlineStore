@@ -6,7 +6,7 @@ const addToCart = async (item) => {
         const amount = 1;
 
         const existingCartItem = await Cart.findOne({
-            where: { itemId: id },
+            where: { itemId: id},
         });
 
         if (existingCartItem) {
@@ -22,6 +22,7 @@ const addToCart = async (item) => {
         return { success: false, error: 'Ошибка при добавлении товара в корзину.' };
     }
 };
+
 
 async function getCartItems() {
     try {
@@ -106,7 +107,7 @@ const saveSizeToCart = async (req, res) => {
     try {
         const { itemId, sizeId } = req.body;
 
-        const existingCartItem = await Cart.findOne({ where: { itemId } });
+        const existingCartItem = await Cart.findOne({ where: { itemId} });
 
         if (existingCartItem && existingCartItem.sizeId === sizeId) {
             res.send({ success: true, message: 'Размер товара уже сохранен в корзине.' });
@@ -126,6 +127,7 @@ const saveSizeToCart = async (req, res) => {
         res.status(500).send({ success: false, error: 'Ошибка при сохранении размера в корзине' });
     }
 };
+
 
 
 module.exports = {

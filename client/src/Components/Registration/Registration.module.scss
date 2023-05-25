@@ -1,0 +1,123 @@
+.reg_modal {
+  position: absolute;
+  top: 33%;
+  left: 69%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px 20px 30px 34px;
+  width: 400px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  border: 0;
+}
+
+h2{
+  text-align: center;
+}
+
+.reg_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.17);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.reg_button_close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.reg_button_close path {
+  fill: #b5b5b5;
+}
+
+.reg_button_close:hover path {
+  fill: #666;
+}
+
+.reg_success_message {
+  text-align: center;
+}
+
+.reg_success_message h2 {
+  margin: 0;
+  color: #333;
+  padding: 25px;
+}
+
+.reg_form {
+  margin-top: 20px;
+}
+
+.reg_form input[type="text"],
+.reg_form input[type="email"],
+.reg_form input[type="password"] {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.reg_form button[type="submit"] {
+  width: 96%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 0;
+  background-color: #ff795e;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.reg_form button[type="submit"]:hover {
+  transform: scale(1.02);
+}
+
+.reg_form button {
+  margin-top: 10px;
+}
+
+.reg_form button:hover {
+  transform: scale(1.02);
+  transition: ease-in-out 200ms;
+}
+
+.reg_form button:focus {
+  outline: none;
+}
+
+.reg_form button:focus-visible {
+  outline: auto;
+}
+
+.auth_btn{
+  width: 96%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 0;
+  background-color: #ffa823;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.auth_btn:hover{
+  transform: scale(0.98);
+  transition: ease-out 200ms;
+}
+
+.reg_error_message{
+  color: red;
+}

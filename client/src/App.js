@@ -81,14 +81,15 @@ function App() {
             <ScrollToTop showUnder={260}>
                 <span><img src="/statics/ButtonUp.png" alt="UP"/></span>
             </ScrollToTop>
-            <Header onClickedCart={() => setCartIsOpen(true)} />
+            <Header onClickedCart={() => setCartIsOpen(true)} isLoading={isLoading} />
             {cartIsOpen && <SideCart idItem={item.id} item={cartItems} onClosedCart={() => setCartIsOpen(false)} />}
-            <div className="Search">
-                <p>Search Item</p>
-                <input onChange={onChangeSearchBar} placeholder="Halloween socks..." className="Search_bar"/>
-            </div>
             {isLoading ? ( <Loading/>
                 ) : (
+                    <div>
+                <div className="Search">
+                    <p>Search Item</p>
+                    <input onChange={onChangeSearchBar} placeholder="Halloween socks..." className="Search_bar"/>
+                </div>
                 <div className="main_content">
                     <div className="socks">
                         {
@@ -105,6 +106,7 @@ function App() {
                         )}
                     </div>
                 </div>
+                    </div>
             )}
         </div>
     );

@@ -10,10 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@admin-bro/express": "^3.1.0",
+    "@admin-bro/sequelize": "^1.2.1",
+    "admin-bro": "^4.0.1",
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
+    "defaults": "^2.0.1",
     "dotenv": "^16.0.3",
-    "express": "^4.18.2",
     "express-validator": "^6.15.0",
     "formidable": "^2.1.1",
     "jsonwebtoken": "^9.0.0",
@@ -21,7 +24,8 @@
     "pg": "^8.9.0",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.28.0",
-    "sharp": "^0.31.3"
+    "sharp": "^0.31.3",
+    "tslib": "^2.5.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

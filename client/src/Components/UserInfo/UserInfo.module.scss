@@ -1,0 +1,166 @@
+
+.user_modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 650px;
+  height: 800px;
+  max-width: 90%;
+}
+
+.user_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.user_info_title{
+  text-align: center;
+}
+
+.user_order_title{
+  text-align: left;
+  margin-top: 40px;
+}
+
+.auth_button_close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+input[type="email"] {
+  width: 80%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+input[type="text"] {
+  mask: unset;
+}
+
+.user_info_text {
+  margin-bottom: 10px;
+}
+
+.user_info_edit_button {
+  background-color: #ff795e;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.user_info_save_button,
+.user_info_cancel_button {
+  background-color: #a2d4df;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.user_info_save_button:hover,
+.user_info_cancel_button:hover {
+  background-color: rgba(31, 30, 22, 0.62);
+  transition: ease-in-out 200ms;
+}
+
+.user_info_phone{
+  margin-left: 10px;
+}
+
+.user_info_name{
+  margin-left: 40px;
+}
+
+.user_info_email{
+  margin-left: 37px;
+}
+
+.user_info_orders {
+  margin-top: 20px;
+}
+
+.user_info_order {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.user_info_order_date,
+.user_info_order_total {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.user_info_order_items {
+  margin-top: 10px;
+}
+
+.user_info_order_item {
+  margin-bottom: 5px;
+}
+
+.user_info_order_item_name {
+  font-weight: bold;
+}
+
+.user_info_order_item_details {
+  margin-left: 10px;
+  font-size: 14px;
+}
+
+.user_info_logout_button {
+  background-color: rgba(162, 1, 0, 0.53);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 1.1em;
+}
+
+.user_info_loading {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.input_mask_container {
+  position: relative;
+}
+
+.input_mask_container::after {
+  content: "+7";
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+}
+
+.input_mask_container input[type="text"] {
+  padding-left: 30px;
+}

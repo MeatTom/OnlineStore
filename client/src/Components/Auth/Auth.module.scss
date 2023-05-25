@@ -1,0 +1,84 @@
+.auth_modal {
+  position: absolute;
+  top: 32%;
+  left: 69%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 70px 20px 70px 30px;
+  width: 400px;
+  max-width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  border: 0;
+}
+
+.auth_modal_overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth_button_close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+.auth_button_close path {
+  fill: #b5b5b5;
+}
+
+.auth_button_close:hover path {
+  fill: #666;
+}
+
+.auth_success_message {
+  text-align: center;
+}
+
+.auth_success_message h1 {
+  color: #333;
+  padding: 57px;
+  margin-top: 5px;
+}
+
+.auth_form {
+  margin-top: 20px;
+}
+
+.auth_form input[type="email"],
+.auth_form input[type="password"] {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.auth_form button[type="submit"] {
+  width: 96%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 0;
+  background-color: #ff795e;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.auth_form button[type="submit"]:hover {
+  background-color: #a2d4df;
+}
+
+.auth_error_message{
+  color: red;
+}

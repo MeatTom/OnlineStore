@@ -1,18 +1,20 @@
 import style from './SideCart.module.scss'
-import React from "react";
+import React, {useState} from "react";
 import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
+import OrderModal from "../OrderModal/OderModal";
 function SideCart ({cartOpen, onClosedCart}) {
     const [totalPrice, setTotalPrice] = React.useState(0)
     const [items, setItems] = React.useState([]);
     const [sizes, setSizes] = React.useState([]);
     const [stock, setStock] = React.useState([]);
     const [isLoading, setIsLoading] = React.useState(true);
+    const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
     React.useEffect(() => {
         const fetchCartItems = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/show_cart');
+                const response = await axios.get(`http://localhost:5000/show_cart`);
                 setItems(response.data);
                 setIsLoading(false);
             } catch (error) {
@@ -104,7 +106,13 @@ function SideCart ({cartOpen, onClosedCart}) {
         }
     };
 
+    const openOrderModal = () => {
+        setIsOrderModalOpen(true);
+    };
 
+    const closeOrderModal = () => {
+        setIsOrderModalOpen(false);
+    };
 
     return(
         <div>
@@ -145,7 +153,6 @@ function SideCart ({cartOpen, onClosedCart}) {
                             const availableQuantity = stock.find(
                                 (stockItem) => stockItem.itemId === item.itemId && stockItem.sizeId === item.sizeId
                             )?.quantity;
-
                             const isMaxQuantityReached = availableQuantity && item.amount >= availableQuantity;
                             return (
                                 <div key={uuidv4()} className={style.cartItem}>
@@ -179,13 +186,14 @@ function SideCart ({cartOpen, onClosedCart}) {
                     </div>
                     <div className={style.bottomCart}>
                         <p>Итоговая сумма: <b>{totalPrice}$</b></p>
-                        <div className={style.CheckoutButton}>
+                        <div className={style.CheckoutButton} onClick={openOrderModal}>
                             <img src="/statics/Checkout_Icon.png" alt="checkout"/>
                             <p>Checkout</p>
                         </div>
                     </div>
                 </div>
             </div>
+            <OrderModal onClose={closeOrderModal} isOpen={isOrderModalOpen} products={items} />
         </div>)}
      </div>
     )
