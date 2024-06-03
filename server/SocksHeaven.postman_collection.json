@@ -1,0 +1,785 @@
+{
+	"info": {
+		"_postman_id": "a3757e03-f4d7-4324-968d-aeaa1a59849a",
+		"name": "SocksHeaven",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25896340"
+	},
+	"item": [
+		{
+			"name": "Отправка кода на почту",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"GOGeBaby@yandex.ru\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/send-code",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"send-code"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Регистрация",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"AAAA\",\r\n    \"email\": \"aa22@bb.com\",\r\n    \"password\": \"11111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Авторизация",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"aa@bb.com\",\r\n    \"password\": \"11111\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Просмотр всех товаров",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/tovars",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"tovars"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Список всех размеров",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/sizes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sizes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Просмотр одного товара",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/tovar/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"tovar",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Наличие одного товара на складе",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/stock/item/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stock",
+						"item",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Наличие всех товаров на складе",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/stock",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"stock"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение избранного",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJlbWFpbCI6IkdPR2VCYWJ5QHlhbmRleC5ydSIsImlhdCI6MTcxNTgxMjg5NywiZXhwIjoxNzE2Njc2ODk3fQ.A8W9GRnYeBlpJkvwrk01hFKck2J-AhzxpVEix8mFpIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/favorites",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление в избранное",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJlbWFpbCI6IkdPR2VCYWJ5QHlhbmRleC5ydSIsImlhdCI6MTcxNTgxMjg5NywiZXhwIjoxNzE2Njc2ODk3fQ.A8W9GRnYeBlpJkvwrk01hFKck2J-AhzxpVEix8mFpIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itemId\": \"1\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/add-to-favorites",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"add-to-favorites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление из избранного",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJlbWFpbCI6IkdPR2VCYWJ5QHlhbmRleC5ydSIsImlhdCI6MTcxNTgxMjg5NywiZXhwIjoxNzE2Njc2ODk3fQ.A8W9GRnYeBlpJkvwrk01hFKck2J-AhzxpVEix8mFpIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/favorites/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"favorites",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление в корзину",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itemId\": \"2\",\r\n    \"amount\": 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/cart",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"cart"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Добавление товара в корзину",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiR09HZUJhYnlAeWFuZGV4LnJ1IiwiaWF0IjoxNzE3MDIwMzc3LCJleHAiOjE3MTg4MzQ3Nzd9.K4xoMVTt9_GZwlIFoaBWnMWqFKlWVsw0unYTH9n5tNs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"itemId\": 4,\r\n    \"sizeId\": 21\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/cart/size",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"cart",
+						"size"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Просмотр корзины",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "Уменьшение количества товара в корзине",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:5000/show_cart/decrement/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"show_cart",
+						"decrement",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Увеличение количества товара в корзине",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "quantity",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/show_cart/increment/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"show_cart",
+						"increment",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Удаление товара из корзины",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/show_cart/delete/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"show_cart",
+						"delete",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Очистка корзины",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiR09HZUJhYnlAeWFuZGV4LnJ1IiwiaWF0IjoxNzE3MDIwMzc3LCJleHAiOjE3MTg4MzQ3Nzd9.K4xoMVTt9_GZwlIFoaBWnMWqFKlWVsw0unYTH9n5tNs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/cart/clear",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"cart",
+						"clear"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение способов доставки",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/delivery",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"delivery"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение способов оплаты",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/payment",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"payment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Оформление заказа",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiR09HZUJhYnlAeWFuZGV4LnJ1IiwiaWF0IjoxNzE3MDIwMzc3LCJleHAiOjE3MTg4MzQ3Nzd9.K4xoMVTt9_GZwlIFoaBWnMWqFKlWVsw0unYTH9n5tNs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"deliveryTypeId\": \"1\",\r\n    \"paymentMethodId\": \"2\",\r\n    \"deliveryAddress\": \"\",\r\n    \"total_price\": 3.67,\r\n    \"products\": [\r\n        {\r\n            \"id\": 9,\r\n            \"name\": \"MAG \\\"Krevetka\\\"\",\r\n            \"description\": \"Хлопковые носки унисекс с комфортной широкой резинкой \\\"в рубчик\\\". Вся модель декорирована ярким рисунком \\\"Креветка\\\".\",\r\n            \"price\": \"3.67\",\r\n            \"image\": \"http://localhost:5000/image_storage/1683989100309-p1-05-noski-s-krevet.png\",\r\n            \"amount\": 1,\r\n            \"sizeId\": 1,\r\n            \"itemId\": 12,\r\n            \"createdAt\": \"2024-05-29T23:44:20.727Z\"\r\n        }\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"order"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Профиль",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIxLCJlbWFpbCI6ImFhQGJiLmNvbSIsImlhdCI6MTY3Njk4ODQzNCwiZXhwIjoxNjc3MDI0NDM0fQ.jdqLVfwyMQ11EsayAk4_C5DWtbGmD1_cZmVu_TrJmx0",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/auth/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"auth",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Получение всех заказов пользователя",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJlbWFpbCI6IkdPR2VCYWJ5QHlhbmRleC5ydSIsImlhdCI6MTcxNTgxMjg5NywiZXhwIjoxNzE2Njc2ODk3fQ.A8W9GRnYeBlpJkvwrk01hFKck2J-AhzxpVEix8mFpIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/orders",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Изменение информации о пользователе",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIwLCJlbWFpbCI6IkdPR2VCYWJ5QHlhbmRleC5ydSIsImlhdCI6MTcxNTgxMjg5NywiZXhwIjoxNzE2Njc2ODk3fQ.A8W9GRnYeBlpJkvwrk01hFKck2J-AhzxpVEix8mFpIE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Дима\",\r\n    \"email\": \"dima@yandex.ru\",\r\n    \"phone\": \"+7 (989) 875-76-55\",\r\n    \"code\":\"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Изменение пароля пользователя",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoiR09HZUJhYnlAeWFuZGV4LnJ1IiwiaWF0IjoxNzE3MDIwMzc3LCJleHAiOjE3MTg4MzQ3Nzd9.K4xoMVTt9_GZwlIFoaBWnMWqFKlWVsw0unYTH9n5tNs",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"currentPassword\": \"Дима\",\r\n    \"newPassword\": \"dima@yandex.ru\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/users/update-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"users",
+						"update-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Отмена заказа",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/cancel-order/20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"cancel-order",
+						"20"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Загрузка изображения для товара",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/meatt/OneDrive/Документы/ЭКЗАМЕНЫ/Ильюшенков/Учебная практика/Интернет магазин/client/public/statics/Socks/Socks6.png"
+						},
+						{
+							"key": "name",
+							"value": "22222",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "price",
+							"value": "4",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/tovars/image/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"tovars",
+						"image",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
