@@ -23,5 +23,25 @@
 }
 
 .text{
-  margin: 100px 50% 20px 48%;
+  margin: 100px 50% 20px 47.5%;
+}
+
+@media (max-width: 900px) {
+  .spinner {
+    margin: 10px 30% 650px 45%;
+  }
+
+  .text{
+    margin: 100px 40% 20px 46%;
+  }
+}
+
+@media (max-width: 500px) {
+  .spinner {
+    margin: 10px 30% 650px 40%;
+  }
+
+  .text{
+    margin: 100px 40% 20px 41%;
+  }
 }

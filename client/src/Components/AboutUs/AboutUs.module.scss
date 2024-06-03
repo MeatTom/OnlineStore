@@ -1,0 +1,145 @@
+.aboutUs {
+  position: absolute;
+  width: 90%;
+  left: 0;
+  top: 65px;
+  right: 0;
+  background: #E5E5E5;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  margin: 0 auto;
+  max-width: 1600px;
+
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      font-size: 2.5rem;
+      color: #333;
+      position: relative;
+      display: inline-block;
+      &:after {
+        content: '';
+        display: block;
+        width: 50%;
+        height: 2px;
+        background-color: #ff6f61;
+        margin: 0.5rem auto 0;
+      }
+    }
+  }
+
+  .content {
+    line-height: 1.6;
+  }
+
+  .section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    background-color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1em;
+    margin-left: 4em;
+    margin-right: 4em;
+    opacity: 0;
+    transform: translateX(-50%);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+
+    &:nth-child(even) {
+      flex-direction: row-reverse;
+      transform: translateX(50%);
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    &.animateLeft {
+      opacity: 1;
+      transform: translateX(0);
+      display: flex;
+    }
+
+    &.animateRight {
+      opacity: 1;
+      transform: translateX(0);
+      display: flex;
+    }
+  }
+
+  .image {
+    width: 40%;
+    height: auto;
+    border-radius: 10px;
+    margin: 0.5em;
+  }
+
+  .text {
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #ff6f61;
+    }
+
+    p {
+      font-size: 1rem;
+      color: #555;
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 768px) {
+  .aboutUs {
+
+    .header h1 {
+      font-size: 2rem;
+    }
+
+    .section {
+      flex-direction: column;
+      margin-left: 1em;
+      margin-right: 1em;
+      &:nth-child(even) {
+        flex-direction: column;
+      }
+    }
+
+    .image {
+      width: 100%;
+    }
+
+    .text {
+      padding: 1rem;
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .header h1 {
+    font-size: 1.8rem;
+  }
+
+  .text h2 {
+    font-size: 1.3rem;
+  }
+
+  .text p {
+    font-size: 0.8rem;
+  }
+}

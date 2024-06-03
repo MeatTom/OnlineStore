@@ -1,7 +1,7 @@
 .sideCart{
 
 .drawer_shadow{
-  position: absolute;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;
@@ -18,18 +18,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 27%;
-    margin-top: 22%;
+    left: 50%;
+    margin-right: -50%;
+    top: 50%;
+    right: auto;
+    bottom: auto;
     padding: 72px 8px 8px;
     gap: 10px;
     background: #E5E5E5;
-    position: absolute;
+    position: fixed;
     width: 600px;
     height: 620px;
-    top: -250px;
     border-radius: 10px;
     z-index: 1000;
     box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
+    transform: translate(-50%, -50%);
+
 
 
     h1{
@@ -56,10 +60,11 @@
       width: 95%;
       height: 0;
       left: -19em;
-      top: 50%;
-      border: 4px solid rgba(133,133,133,0.90);
+      top: 45%;
+      border: 4px solid rgba(31, 30, 22, 0.62);
       transform: rotate(90deg);
       z-index: 1000;
+      border-radius: 20px;
     }
 
     .cartItems{
@@ -180,6 +185,30 @@
           line-height: 24px;
           color: #FFFFFF;
         }
+
+
+      }
+    }
+    .ClearCartButton{
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      padding: 8px 14px;
+      gap: 8px;
+      width: 100%;
+      height: 40px;
+      background: rgba(225, 146, 128, 0.66);
+      border-radius: 14px;
+      color: white;
+      border: none;
+      margin-bottom: 1em;
+      font-size: 1em;
+
+      transition: background-color 0.3s ease-in-out;
+      &:hover{
+        background-color: rgb(255, 121, 94);
+        cursor: pointer;
       }
     }
   }
@@ -225,4 +254,50 @@
 
 }
 
+
+@media (max-width: 690px) {
+  .sideCart{
+    .drawer_shadow{
+      .drawer{
+      width: 400px;
+
+        .cartItem{
+          width: 80%;
+          margin: 0 auto 1em auto;
+
+          .delButton{
+            margin-top: 20%;
+          }
+        }
+
+        .drawer_line{
+          display: none;
+        }
+
+        .bottomCart {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 15px;
+
+          p {
+            font-size: 25px;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 450px) {
+  .sideCart{
+    .drawer_shadow{
+      .drawer{
+        width: 290px;
+      }
+    }
+  }
+}
 

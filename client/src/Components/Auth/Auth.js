@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import Modal from 'react-modal';
 import ModalStyle from '../Auth/Auth.module.scss';
+import { useNavigate } from 'react-router-dom';
+import { useLoginMutation } from '../../Services/socksApi';
 
 const AuthForm = ({ isOpen, onClose }) => {
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [loginMutation, { isLoading }] = useLoginMutation();
     const [isSuccess, setIsSuccess] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -18,18 +21,12 @@ const AuthForm = ({ isOpen, onClose }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/auth/login', {
-                email,
-                password,
-            });
-
+            const response = await loginMutation({ email, password });
             const { token } = response.data;
             localStorage.setItem('token', token);
             setIsSuccess(true);
-
-            console.log('Авторизация успешна');
         } catch (error) {
-            console.error('Ошибка при авторизации:', error.response.data.error);
+            console.error('Ошибка при авторизации:', error);
             setErrorMessage('Неверный логин или пароль');
         }
     };
@@ -38,13 +35,13 @@ const AuthForm = ({ isOpen, onClose }) => {
         let timer;
         if (isSuccess) {
             timer = setTimeout(() => {
-                onClose();
-            }, 3000);
+                navigate("/user-info");
+            }, 2000);
         }
         return () => {
             clearTimeout(timer);
         };
-    }, [isSuccess, onClose]);
+    }, [isSuccess, navigate]);
 
     const handleClose = () => {
         onClose();
@@ -56,6 +53,7 @@ const AuthForm = ({ isOpen, onClose }) => {
             contentLabel="Size Modal"
             className={ModalStyle.auth_modal}
             overlayClassName={ModalStyle.auth_modal_overlay}
+            appElement={document.getElementById('root')}
         >
             <>
                 <svg
@@ -78,13 +76,13 @@ const AuthForm = ({ isOpen, onClose }) => {
                     </div>
                 ) : (
                     <form className={ModalStyle.auth_form} onSubmit={handleAuthorization}>
-                        <h2>Login</h2>
+                        <h2>Вход</h2>
                         {errorMessage && (
                             <div className={ModalStyle.auth_error_message}>{errorMessage}</div>
                         )}
                         <input
                             type="email"
-                            placeholder="Email"
+                            placeholder="Почта"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
@@ -94,7 +92,9 @@ const AuthForm = ({ isOpen, onClose }) => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
-                        <button type="submit">Войти</button>
+                        <button type="submit" disabled={isLoading}>
+                            {isLoading ? 'Вход...' : 'Войти'}
+                        </button>
                     </form>
                 )}
             </>

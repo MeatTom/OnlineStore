@@ -6,6 +6,21 @@ const sequelize = new Sequelize('socks_store', 'postgres', 'mitron16', {
     dialect: 'postgres',
 });
 
+const VerificationCode = sequelize.define('VerificationCode', {
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    code: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    expires_at: {
+        type: DataTypes.DATE,
+        allowNull: false,
+    },
+});
+
 const User = sequelize.define('User', {
     id: {
         type: DataTypes.INTEGER,
@@ -28,6 +43,10 @@ const User = sequelize.define('User', {
     phone: {
         type: DataTypes.STRING,
         allowNull: true,
+    },
+    isAdmin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
     }
 });
 
@@ -94,6 +113,15 @@ const Cart = sequelize.define('Cart', {
         },
         onDelete: 'CASCADE',
     },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+            model: User,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
 });
 
 const Stock = sequelize.define('Stock', {
@@ -151,6 +179,18 @@ const PaymentMethod = sequelize.define('PaymentMethod', {
     },
 });
 
+const Status = sequelize.define('Status', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+});
+
 const Order = sequelize.define('Order', {
     id: {
         type: DataTypes.INTEGER,
@@ -196,6 +236,16 @@ const Order = sequelize.define('Order', {
         type: DataTypes.ARRAY(DataTypes.INTEGER),
         allowNull: true,
     },
+    statusId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+        references: {
+            model: Status,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
 });
 
 const OrderTovar = sequelize.define('OrderTovar', {
@@ -238,7 +288,31 @@ const OrderTovar = sequelize.define('OrderTovar', {
     },
 });
 
-OrderTovar.removeAttribute('unique', 'OrderTovars_orderId_tovarId_key');
+const Favorite = sequelize.define('Favorite', {
+    id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: User,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
+    itemId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: Tovar,
+            key: 'id',
+        },
+        onDelete: 'CASCADE',
+    },
+});
 
 Size.hasMany(Stock, { foreignKey: 'sizeId' });
 Size.hasMany(OrderTovar, { foreignKey: 'sizeId' });
@@ -257,13 +331,20 @@ Order.hasMany(OrderTovar, { as: 'orderTovars', foreignKey: 'orderId' });
 OrderTovar.belongsTo(Order, { foreignKey: 'orderId' });
 OrderTovar.belongsTo(Tovar, { as: 'tovar', foreignKey: 'tovarId' });
 OrderTovar.belongsTo(Size, { foreignKey: 'sizeId', as: 'size' });
-
+User.hasMany(Cart, { foreignKey: 'userId' });
+Cart.belongsTo(User, { foreignKey: 'userId' });
+User.hasMany(Favorite, { foreignKey: 'userId' });
+Favorite.belongsTo(User, { foreignKey: 'userId' });
+Tovar.hasMany(Favorite, { foreignKey: 'itemId' });
+Favorite.belongsTo(Tovar, { foreignKey: 'itemId' });
+Order.belongsTo(Status, { foreignKey: 'statusId' });
 
 sequelize.sync().then(() => {
-    console.log('All models were synchronized successfully.');
+    console.log('Все модели синхронизированы успешно.');
 }).catch(error => {
-    console.error('An error occurred during synchronization:', error);
+    console.error('При синхронизации БД возникла ошибка:', error);
 });
+
 
 module.exports = {
     User,
@@ -276,4 +357,7 @@ module.exports = {
     Order,
     OrderTovar,
     sequelize,
+    VerificationCode,
+    Favorite,
+    Status
 };

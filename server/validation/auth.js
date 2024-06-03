@@ -11,4 +11,8 @@ const loginValidation = [
     body('password', "Пароль должен быть минимум 5 символов").isLength({min: 5})
 ]
 
-module.exports = {regValidation, loginValidation}
+const sendCodeValidation = [
+    body('email', "Неверный формат почты").isEmail(),
+]
+
+module.exports = {regValidation, loginValidation, sendCodeValidation}

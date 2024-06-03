@@ -1,19 +1,34 @@
-const { Cart, Tovar } = require('../models/db');
+const { Cart, Tovar , Stock} = require('../models/db');
+const jwt = require('jsonwebtoken');
 
-const addToCart = async (item) => {
+const verifyAuthToken = (token, res) => {
     try {
+        const decoded = jwt.verify(token, process.env.SECRET);
+        return decoded.userId;
+    } catch (error) {
+        throw new Error('Неверный токен');
+    }
+};
+
+const addToCart = async (item, req) => {
+    try {
+        
         const { id } = item;
         const amount = 1;
 
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+
+        const userId = verifyAuthToken(token);
+
         const existingCartItem = await Cart.findOne({
-            where: { itemId: id},
+            where: { itemId: id, userId: userId },
         });
 
         if (existingCartItem) {
             const newAmount = existingCartItem.amount + 1;
             await existingCartItem.update({ amount: newAmount });
         } else {
-            await Cart.create({ itemId: id, amount });
+            await Cart.create({ itemId: id, amount, userId });
         }
 
         return { success: true, message: 'Товар добавлен в корзину.' };
@@ -23,10 +38,15 @@ const addToCart = async (item) => {
     }
 };
 
-
-async function getCartItems() {
+const getCartItems = async (token, res) => {
     try {
+
+        const userId = verifyAuthToken(token);
+
+
+
         const cartItems = await Cart.findAll({
+            where: { userId },
             include: { model: Tovar },
         });
 
@@ -39,13 +59,15 @@ async function getCartItems() {
             amount: item.amount,
             sizeId: item.sizeId,
             itemId: item.itemId,
+            createdAt: item.createdAt
         }));
 
         return items;
     } catch (error) {
         console.error(error);
+        throw new Error('Не удалось получить данные корзины');
     }
-}
+};
 
 async function deleteCartItem(id) {
     try {
@@ -63,17 +85,17 @@ const decrementCartItem = async (id) => {
     try {
         const cartItem = await Cart.findOne({ where: { id } });
         if (!cartItem) {
-            throw new Error(`Cart item with id ${id} not found`);
+            const error = new Error(`Запись с id = ${id} в корзине не найдена`);
+            error.statusCode = 404;
+            throw error;
         }
-
-        if (cartItem.amount > 1) {
-            await cartItem.update({ amount: cartItem.amount - 1 });
-        } else {
-            await Cart.destroy({ where: { id } });
-        }
+        await cartItem.update({ amount: cartItem.amount - 1 });
     } catch (error) {
-        console.error(error);
-        throw new Error('Failed to decrement cart item');
+        if (!error.statusCode) {
+            error.statusCode = 500;
+            error.message = 'Не удалось уменьшить количество товара';
+        }
+        throw error;
     }
 };
 
@@ -81,12 +103,17 @@ const incrementCartItem = async (id) => {
     try {
         const cartItem = await Cart.findOne({ where: { id } });
         if (!cartItem) {
-            throw new Error(`Cart item with id ${id} not found`);
+            const error = new Error(`Запись с id = ${id} в корзине не найдена`);
+            error.statusCode = 404;
+            throw error;
         }
         await cartItem.update({ amount: cartItem.amount + 1 });
     } catch (error) {
-        console.error(error);
-        throw new Error('Failed to increment cart item');
+        if (!error.statusCode) {
+            error.statusCode = 500;
+            error.message = 'Не удалось увеличить количество товара';
+        }
+        throw error;
     }
 };
 
@@ -106,21 +133,37 @@ const resetCartItemBySize = async (itemId, sizeId) => {
 const saveSizeToCart = async (req, res) => {
     try {
         const { itemId, sizeId } = req.body;
+        const token = (req.headers.authorization || '').replace(/Bearer\s?/, '');
+        if (!token) {
+            return res.status(401).json({ message: 'Токен не предоставлен' });
+        }
+        const userId = verifyAuthToken(token);
 
-        const existingCartItem = await Cart.findOne({ where: { itemId} });
+        const stockItem = await Stock.findOne({ where: { itemId, sizeId } });
 
-        if (existingCartItem && existingCartItem.sizeId === sizeId) {
-            res.send({ success: true, message: 'Размер товара уже сохранен в корзине.' });
+        if (!stockItem) {
+            res.status(404).send({ success: false, error: 'Товара нет на складе.' });
             return;
         }
 
+        const availableQuantity = stockItem.quantity;
+
+        const existingCartItem = await Cart.findOne({ where: { itemId, sizeId, userId } });
+
         if (existingCartItem) {
-            await resetCartItemBySize(itemId, existingCartItem.sizeId);
-            await existingCartItem.update({ sizeId });
-            res.send({ success: true, message: 'Размер успешно изменен в корзине.' });
+            if (existingCartItem.amount + 1 > availableQuantity) {
+                res.status(400).send({ success: false, error: 'Нельзя добавить больше товара, чем доступно на складе.' });
+                return;
+            }
+            await existingCartItem.update({ amount: existingCartItem.amount + 1 });
+            res.send({ success: true, message: 'Количество товара в корзине увеличено.' });
         } else {
-            await Cart.create({ itemId, sizeId, amount: 1 });
-            res.send({ success: true, message: 'Товар добавлен в корзину.'});
+            if (1 > availableQuantity) {
+                res.status(400).send({ success: false, error: 'Нельзя добавить больше товара, чем доступно на складе.' });
+                return;
+            }
+            await Cart.create({ itemId, sizeId, amount: 1, userId });
+            res.send({ success: true, message: 'Товар добавлен в корзину.' });
         }
     } catch (error) {
         console.error(error);
@@ -128,7 +171,25 @@ const saveSizeToCart = async (req, res) => {
     }
 };
 
+const clearCartForUser = async (token) => {
 
+    const userId = verifyAuthToken(token);
+
+    if (!token) {
+        return res.status(401).json({ message: 'Токен не предоставлен' });
+    }
+
+    try {
+        await Cart.destroy({
+            where: { userId }
+        });
+
+        return { success: true, message: 'Корзина пользователя очищена успешно.' };
+    } catch (error) {
+        console.error(error);
+        throw new Error('Ошибка при очистке корзины пользователя');
+    }
+};
 
 module.exports = {
     addToCart,
@@ -136,5 +197,6 @@ module.exports = {
     deleteCartItem,
     incrementCartItem,
     decrementCartItem,
-    saveSizeToCart
+    saveSizeToCart,
+    clearCartForUser
 };

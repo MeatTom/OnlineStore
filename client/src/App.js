@@ -1,116 +1,186 @@
 import './App.scss';
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useGetItemsQuery, useAddToCartMutation, useAddFavoriteMutation, useRemoveFavoriteMutation, useGetFavoritesQuery } from './Services/socksApi';
 import Item from './Components/Item/Item';
 import Header from "./Components/Header/header";
 import SideCart from "./Components/SideCart/SideCart";
-import axios from 'axios';
 import Loading from "./Components/Loading/Loading";
 import ScrollToTop from "react-scroll-up";
+import FilterSortPanel from './Components/FilterSortPanel/FilterSortPanel';
+import { useNotification } from './Components/Notification/Notification';
 
 function App() {
-    const [item, setItem] = React.useState([])
-    const [cartItems, setCartItems] = React.useState([])
-    const [searchBar, setSearchBar] = React.useState('')
-    const [cartIsOpen, setCartIsOpen] = React.useState(false)
-    const [isLoading, setIsLoading] = React.useState(true);
-    const [displayedItems, setDisplayedItems] = React.useState([]);
-    const [itemsToShow, setItemsToShow] = React.useState(8);
-    const [hasMoreItems, setHasMoreItems] = React.useState(true);
+    const [searchBar, setSearchBar] = useState('');
+    const [cartIsOpen, setCartIsOpen] = useState(false);
+    const [filterParams, setFilterParams] = useState({
+        priceRange: { min: '', max: '' },
+        sortBy: 'priceAsc',
+    });
 
-    React.useEffect(() => {
-        const getData = () => {
-        axios.get('http://localhost:5000/tovars')
-            .then((response) => {
-                setItem(response.data);
-                setIsLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-                setIsLoading(true);
-            })
-        };
-        const intervalId = setInterval(() => {
-            getData();
-        }, 15000);
+    const token = localStorage.getItem('token');
+    const { addNotification } = useNotification();
+    const { data: items, isLoading, isError, refetch } = useGetItemsQuery();
+    const [addToCart] = useAddToCartMutation();
+    const { data: favorites, refetch: refetchFavorites } = useGetFavoritesQuery();
+    const [addToFavorite] = useAddFavoriteMutation();
+    const [removeFavorite] = useRemoveFavoriteMutation();
 
-        getData();
+    const [displayedItems, setDisplayedItems] = useState([]);
+    const [itemsToShow, setItemsToShow] = useState(8);
+    const [hasMoreItems, setHasMoreItems] = useState(true);
+    const [contentVisible, setContentVisible] = useState(false);
+    const [loadingDelayed, setLoadingDelayed] = useState(true);
 
-        return () => clearInterval(intervalId);
-   },[]);
-
-    React.useEffect(() => {
-        if (cartIsOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "unset";
-        }
-        return () => {
-            document.body.style.overflow = "unset";
-        }
-    }, [cartIsOpen]);
-
-    const onAddToCart = (obj) => {
-        axios.post('http://localhost:5000/cart', { ...obj, id: obj.id })
-            .then(response => {
-                setCartItems(prev => [...prev, response.data]);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
-
-    const onChangeSearchBar = (event) => {
-        setSearchBar(event.target.value)
-    }
-
-    const handleLoadMore = () => {
-        if (itemsToShow >= item.length) {
-            setHasMoreItems(false);
-        } else {
-            setDisplayedItems([...displayedItems, ...item.slice(itemsToShow, itemsToShow + 4)]);
-            setItemsToShow(itemsToShow + 4);
+    const handleAddFavorite = async (itemId) => {
+        try {
+            await addToFavorite(itemId);
+            refetchFavorites();
+        } catch (error) {
+            addNotification('Ошибка добавления товара в корзину! Необходимо войти в аккаунт.', 'error');
+            console.error('Ошибка при добавлении в избранное:', error);
         }
     };
 
-    React.useEffect(() => {
-        setDisplayedItems(item.slice(0, itemsToShow));
-    }, [item, itemsToShow]);
+    const handleRemoveFavorite = async (itemId) => {
+        try {
+            await removeFavorite(itemId);
+            refetchFavorites();
+        } catch (error) {
+            console.error('Ошибка при удалении из избранного:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (!isLoading && !isError && items) {
+            let filteredItems = items;
+
+            if (filterParams.priceRange.min) {
+                filteredItems = filteredItems.filter(item =>
+                    item.price >= parseFloat(filterParams.priceRange.min)
+                );
+            }
+            if (filterParams.priceRange.max) {
+                filteredItems = filteredItems.filter(item =>
+                    item.price <= parseFloat(filterParams.priceRange.max)
+                );
+            }
+
+            filteredItems = filteredItems.slice().sort((a, b) => {
+                if (filterParams.sortBy === 'priceAsc') {
+                    return a.price - b.price;
+                } else if (filterParams.sortBy === 'priceDesc') {
+                    return b.price - a.price;
+                } else if (filterParams.sortBy === 'name') {
+                    return a.name.localeCompare(b.name);
+                } else if (filterParams.sortBy === 'createdAtAsc') {
+                    return new Date(a.createdAt) - new Date(b.createdAt);
+                } else if (filterParams.sortBy === 'createdAtDesc') {
+                    return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+                return 0;
+            });
+
+            setDisplayedItems(filteredItems.slice(0, itemsToShow));
+            setHasMoreItems(itemsToShow < filteredItems.length);
+            setLoadingDelayed(false);
+            setContentVisible(true);
+        }
+    }, [isLoading, isError, items, itemsToShow, filterParams]);
+
+    const handleLoadMore = () => {
+        setItemsToShow(itemsToShow + 4);
+    };
+
+    const onAddToCartClick = async (item) => {
+        if (!token) {
+            alert('Для добавления товара в корзину выполните вход');
+            return;
+        }
+        try {
+            const { data } = await addToCart(item);
+            console.log('Added to cart:', data);
+        } catch (error) {
+            console.error('Ошибка при добавлении товара в корзину:', error);
+        }
+    };
+
+    const onChangeSearchBar = (event) => {
+        setSearchBar(event.target.value);
+    };
+
+    const onFilterChange = (params) => {
+        setFilterParams(params);
+    };
+
+    if (isLoading || isError || loadingDelayed) {
+        return (
+            <div className="Wrapper">
+                <Header isLoading={isLoading || loadingDelayed} isError={isError}/>
+                {isError && (
+                    <div className="load_error">
+                    <p className="load_error_msg">Ошибка загрузки данных. Пожалуйста, попробуйте еще раз.</p>
+                    <button className="load_error_btn" onClick={() => refetch()}>Повторить попытку</button>
+                    </div>
+                )}
+                <Loading />
+            </div>
+        );
+    }
+
+    const minPrice = items && items.length > 0 ? Math.min(...items.map(item => item.price)) : 0;
+    const maxPrice = items && items.length > 0 ? Math.max(...items.map(item => item.price)) : 1000;
+
+    const filteredItems = displayedItems.filter(item => item.name.toLowerCase().includes(searchBar.toLowerCase()));
 
     return (
         <div className="Wrapper">
-            <ScrollToTop showUnder={260}>
-                <span><img src="/statics/ButtonUp.png" alt="UP"/></span>
+            <ScrollToTop showUnder={300} style={{ zIndex: 1000, position: 'fixed', bottom: '2rem', right: '2rem' }}>
+                <span><img src="/statics/ButtonUp.png" alt="UP" /></span>
             </ScrollToTop>
-            <Header onClickedCart={() => setCartIsOpen(true)} isLoading={isLoading} />
-            {cartIsOpen && <SideCart idItem={item.id} item={cartItems} onClosedCart={() => setCartIsOpen(false)} />}
-            {isLoading ? ( <Loading/>
-                ) : (
-                    <div>
-                <div className="Search">
-                    <p>Search Item</p>
-                    <input onChange={onChangeSearchBar} placeholder="Halloween socks..." className="Search_bar"/>
-                </div>
-                <div className="main_content">
-                    <div className="socks">
-                        {
-                            displayedItems.filter(item => item.name.toLowerCase().includes(searchBar.toLowerCase())).map((item) =>
-                                <Item key={item.id} id={item.id}
-                                      name={item.name} price={item.price} description={item.description} imageURL = {item.image.replace(/\\/g, "/")}
-                                      onPlus = {() => onAddToCart(item)} />
-                            )
-                        }
-                        {hasMoreItems && itemsToShow < item.length && (
-                            <button className="load_more_btn" onClick={handleLoadMore}>
-                                Load more
-                            </button>
-                        )}
+            <Header onClickedCart={() => setCartIsOpen(true)} isLoading={isLoading || loadingDelayed} isError={isError}/>
+            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)} />}
+            {contentVisible && (
+                <div>
+                    <div className="Search">
+                        <p>Поиск товара</p>
+                        <input onChange={onChangeSearchBar} placeholder="Halloween socks..." className="Search_bar"/>
+                    </div>
+                    <FilterSortPanel
+                        onFilterChange={onFilterChange}
+                        minPrice={minPrice}
+                        maxPrice={maxPrice}
+                    />
+                    <div className="main_content">
+                        <div className="socks">
+                            {filteredItems.length > 0 ? (
+                                filteredItems.map(item => (
+                                    <Item
+                                        key={item.id}
+                                        id={item.id}
+                                        name={item.name}
+                                        price={item.price}
+                                        description={item.description}
+                                        imageURL={item.image.replace(/\\/g, "/")}
+                                        onPlus={() => onAddToCartClick(item)}
+                                        onAddToFavorite={() => handleAddFavorite(item.id)}
+                                        onRemoveFavorite={() => handleRemoveFavorite(item.id)}
+                                        isFavorite={favorites?.some(fav => fav.itemId === item.id)}
+                                    />
+                                ))
+                            ) : (
+                                <p className="search_msg">Упс! Ничего не найдено...</p>
+                            )}
+                            {filteredItems.length > 0 && hasMoreItems && (
+                                <button className="load_more_btn" onClick={handleLoadMore}>
+                                    Загрузить больше
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
-                    </div>
             )}
         </div>
     );
 }
 
 export default App;
-

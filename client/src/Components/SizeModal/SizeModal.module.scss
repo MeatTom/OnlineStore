@@ -1,3 +1,16 @@
+.content {
+  top: 50%;
+  left: 50%;
+  width: 25%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
 .size_modal_header {
   display: flex;
   justify-content: space-between;
@@ -8,7 +21,16 @@
 .size_modal_title {
   text-align: center;
   flex-grow: 1;
-  font-size: 2em;
+  font-size: clamp(1.5rem, 2vw, 2rem);
+}
+
+.size_modal_table{
+  cursor:pointer;
+
+  .size_modal_table:hover{
+    color: #5ec3dc;
+    transition: color ease-in-out .15s;
+  }
 }
 
 .item_modal_button {
@@ -103,4 +125,25 @@
 .item_cart_btn_cancel{
   background-color: #cccccc;
   color: #484848;
+}
+
+
+@media (max-width: 768px) {
+
+  .size_button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .size_modal_btn_bottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .size_cart_btn_active,
+  .item_cart_btn_disabled,
+  .item_cart_btn_cancel {
+    width: 100%;
+    margin: 5px 0;
+  }
 }

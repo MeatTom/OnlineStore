@@ -1,0 +1,315 @@
+@startuml
+
+package Controllers {
+    class StockController {
+        +addToStock(req, res)
+        +updateStockItem(req, res)
+        +deleteStockItem(req, res)
+        +getStockItems(req, res)
+        +getStockItem(req, res)
+        +check_quantity(req, res)
+    }
+
+    class TovarController {
+        +addProduct(req, res)
+        +getAllTovars(req, res)
+        +getTovar(req, res)
+        +updateProductImage(req, res)
+        +updateProductInfo(req, res)
+        +deleteTovar(req, res)
+    }
+
+    class UserController {
+        +sendCode(req, res)
+        +registration(req, res)
+        +authorization(req, res)
+        +checkUserInfo(req, res)
+        +updateUser(req, res)
+        +updateUserPassword(req, res)
+    }
+
+    class SizeController {
+        +getAllSizes(req, res)
+        +addSize(req, res)
+        +updateSize(req, res)
+        +deleteSize(req, res)
+        +getSize(req, res)
+    }
+
+    class OrderController {
+        +getAllDeliveryTypes(req, res)
+        +getAllPaymentMethods(req, res)
+        +placeOrder(req, res)
+        +getUserOrders(req, res)
+        +cancelOrder(req, res)
+    }
+
+    class FavoriteController {
+        +addToFavorite(req, res)
+        +getUserFavorites(req, res)
+        +removeFavorite(req, res)
+    }
+
+    class CartController {
+        +addToCart(item, req)
+        +getCartItems(token)
+        +deleteCartItem(id)
+        +incrementCartItem(id)
+        +decrementCartItem(id)
+        +resetCartItemBySize(itemId, sizeId)
+        +saveSizeToCart(req, res)
+        +clearCartForUser(token)
+    }
+}
+
+package Models {
+    class Stock {
+        +itemId: Integer
+        +sizeId: Integer
+        +quantity: Integer
+        +create(data: Object): Stock
+        +findByPk(id: Integer): Stock
+        +findAll(): List<Stock>
+        +save(): void
+        +destroy(): void
+    }
+
+    class Tovar {
+        +name: String
+        +description: String
+        +price: Float
+        +image: String
+        +create(data: Object): Tovar
+        +findAll(): List<Tovar>
+        +findOne(condition: Object): Tovar
+        +findByPk(id: Integer): Tovar
+        +save(): void
+        +destroy(): void
+    }
+
+    class Size {
+        +size_name: String
+        +create(data: Object): Size
+        +findByPk(id: Integer): Size
+        +findAll(): List<Size>
+        +update(data: Object, options: Object): Size
+        +destroy(condition: Object): void
+    }
+
+    class VerificationCode {
+        +email: String
+        +code: String
+        +expires_at: Date
+        +create(data: Object): VerificationCode
+        +findOne(condition: Object): VerificationCode
+        +destroy(condition: Object): void
+    }
+
+    class User {
+        +name: String
+        +email: String
+        +password: String
+        +phone: String
+        +isAdmin: Boolean
+        +create(data: Object): User
+        +findOne(condition: Object): User
+        +findByPk(id: Integer): User
+        +save(): void
+    }
+
+    class DeliveryType {
+        +name: String
+        +create(data: Object): DeliveryType
+        +findAll(): List<DeliveryType>
+    }
+
+    class PaymentMethod {
+        +name: String
+        +create(data: Object): PaymentMethod
+        +findAll(): List<PaymentMethod>
+    }
+
+    class Order {
+        +customerId: Integer
+        +deliveryTypeId: Integer
+        +paymentMethodId: Integer
+        +delivery_address: String
+        +total_price: Float
+        +statusId: Integer
+        +productIds: List<Integer>
+        +create(data: Object): Order
+        +findAll(condition: Object): List<Order>
+        +findByPk(id: Integer): Order
+        +update(data: Object, condition: Object): Order
+    }
+
+    class OrderTovar {
+        +orderId: Integer
+        +tovarId: Integer
+        +amount: Integer
+        +sizeId: Integer
+        +create(data: Object): OrderTovar
+        +findAll(condition: Object): List<OrderTovar>
+        +bulkCreate(data: List<Object>): List<OrderTovar>
+    }
+
+    class Status {
+        +name: String
+        +findByPk(id: Integer): Status
+    }
+
+    class Cart {
+        +userId: Integer
+        +itemId: Integer
+        +amount: Integer
+        +sizeId: Integer
+        +create(data: Object): Cart
+        +findAll(condition: Object): List<Cart>
+        +findOne(condition: Object): Cart
+        +update(data: Object, condition: Object): Cart
+        +destroy(condition: Object): void
+    }
+
+    class Favorite {
+        +userId: Integer
+        +itemId: Integer
+        +create(data: Object): Favorite
+        +findAll(condition: Object): List<Favorite>
+        +destroy(condition: Object): void
+    }
+}
+
+package Validation {
+    class AuthValidation {
+        +regValidation: Array
+        +loginValidation: Array
+    }
+}
+
+package Routers {
+    class CartRouter {
+        +post('/cart')
+        +get('/show_cart')
+        +delete('/show_cart/delete/:id')
+        +put('/show_cart/decrement/:id')
+        +put('/show_cart/increment/:id')
+        +post("/cart/size")
+        +delete("/cart/clear")
+    }
+
+    class FavoriteRouter {
+        +post('/add-to-favorites')
+        +delete('/favorites/:itemId')
+        +get('/favorites')
+    }
+
+    class OrderRouter {
+        +get('/delivery')
+        +get('/payment')
+        +post('/order')
+        +get('/orders')
+        +patch('/cancel-order/:orderId')
+    }
+
+    class SizeRouter {
+        +get('/sizes')
+        +get('/sizes/:id')
+        +post('/size/add')
+        +put('/size/update/:id')
+        +delete('/size/delete/:id')
+    }
+
+    class StockRouter {
+        +get('/stock')
+        +get('/stock/item/:itemId')
+        +post('/stock/add')
+        +put('/stock/update/:id')
+        +delete('/stock/delete/:id')
+        +get('/stock/check_quantity/:itemId/:sizeId')
+    }
+
+    class TovarRouter {
+        +get('/tovars')
+        +get('/tovar/:id')
+        +post('/tovars/addTovar')
+        +put('/tovars/info/:id')
+        +put('/tovars/image/:id')
+        +delete('/tovars/:id')
+    }
+
+    class UserRouter {
+        +post('/auth/register')
+        +post('/auth/send-code')
+        +post('/auth/login')
+        +get('/auth/profile')
+        +put('/users/update')
+        +put('/users/update-password')
+    }
+
+    class AdminRouter {
+        +rootPath: String
+    }
+}
+
+package Admin {
+    class AdminJS {
+        +registerAdapter(AdminBroSequelize)
+        +buildRouter(adminBro)
+    }
+
+    AdminJS -down-> User
+    AdminJS -down-> Tovar
+    AdminJS -down-> Cart
+    AdminJS -down-> Size
+    AdminJS -down-> Stock
+    AdminJS -down-> Order
+    AdminJS -down-> OrderTovar
+    AdminJS -down-> DeliveryType
+    AdminJS -down-> PaymentMethod
+    AdminJS -down-> VerificationCode
+    AdminJS -down-> Favorite
+    AdminJS -down-> Status
+}
+
+AuthValidation -down-> UserRouter : applies
+
+StockController --> Stock : uses
+StockController --> Tovar : uses
+StockController --> Size : uses
+
+TovarController --> Tovar : uses
+
+UserController --> VerificationCode : uses
+UserController --> User : uses
+
+SizeController --> Size : uses
+
+OrderController --> DeliveryType : uses
+OrderController --> PaymentMethod : uses
+OrderController --> Order : uses
+OrderController --> OrderTovar : uses
+OrderController --> User : uses
+OrderController --> Tovar : uses
+OrderController --> Size : uses
+OrderController --> Stock : uses
+OrderController --> Status : uses
+OrderController --> Cart : uses
+
+FavoriteController --> Favorite : uses
+FavoriteController --> Tovar : uses
+FavoriteController --> User : uses
+
+CartController --> Cart : uses
+CartController --> Tovar : uses
+CartController --> Stock : uses
+
+CartRouter --> CartController : uses
+FavoriteRouter --> FavoriteController : uses
+OrderRouter --> OrderController : uses
+SizeRouter --> SizeController : uses
+StockRouter --> StockController : uses
+TovarRouter --> TovarController : uses
+UserRouter --> UserController : uses
+AdminRouter --> AdminJS : uses
+
+@enduml

@@ -1,24 +1,46 @@
 .reg_modal {
-  position: absolute;
-  top: 33%;
-  left: 69%;
-  transform: translate(-50%, -50%);
   background-color: #fff;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 20px 20px 30px 34px;
-  width: 400px;
-  max-width: 90%;
-  max-height: 90%;
+  width: 40%;
+  max-width: 500px;
   overflow-y: auto;
   border: 0;
+  flex-direction: column;
+  align-items: center;
+  left: 50%;
+  top: 50%;
+  margin-left: 2em;
+  margin-right: 2em;
+  z-index: 1000;
+}
+
+.hidden{
+  display: none;
 }
 
 h2{
   text-align: center;
+  font-size: clamp(1.4rem, 2vw, 1.7rem);
+}
+
+.code_message{
+  font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
+.change_email_btn{
+  cursor: pointer;
+  font-size: 10px;
+  border: 1px solid #ea9682;
+  width: 80%;
+  margin: 0 0 1em 2em;
+  padding: 0.5em;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .reg_modal_overlay {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -27,12 +49,13 @@ h2{
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100%;
+  width: 100%;
+
 }
 
 .reg_button_close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  margin-left: 95%;
   cursor: pointer;
 }
 
@@ -120,4 +143,53 @@ h2{
 
 .reg_error_message{
   color: red;
+}
+
+@media (max-width: 850px) {
+  .reg_form input[type="text"],
+  .reg_form input[type="email"],
+  .reg_form input[type="password"] {
+    width: 88%;
+  }
+
+  .change_email_btn{
+    margin: 0 0 10px 16px;
+  }
+}
+
+
+@media (max-width: 610px) {
+  .reg_modal{
+      width: 60%;
+  }
+}
+
+@media (max-width: 500px) {
+  .auth_btn{
+    padding: 0.6em;
+  }
+
+  .reg_form button[type="submit"] {
+    padding: 0.6em;
+  }
+
+  .reg_form input[type="text"],
+  .reg_form input[type="email"],
+  .reg_form input[type="password"] {
+    width: 85%;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+  }
+
+  .reg_error_message{
+    color: red;
+    font-size: 0.7em;
+  }
+
+  .change_email_btn{
+    margin: 0 0 10px 10px;
+  }
 }

@@ -7,7 +7,7 @@
   border-radius: 10px;
   padding: 20px;
   width: 400px;
-  max-width: 90%;
+  max-width: 80%;
   max-height: 90%;
   overflow-y: auto;
   border: 0;
@@ -23,6 +23,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 }
 
 .size_table_content {

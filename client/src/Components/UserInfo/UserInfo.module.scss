@@ -1,102 +1,173 @@
-
 .user_modal {
+  margin: 0 auto;
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
+  width: 90%;
+  min-height: 800px;
+  left: 0;
+  top: 65px;
+  right: 0;
+  background: #E5E5E5;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
-  padding: 20px;
-  width: 650px;
-  height: 800px;
-  max-width: 90%;
+}
+
+.user_info {
+  padding: 30px;
+  border-radius: 50px;
+  border-bottom: 3px solid #a2d4df;
+  border-top: 3px solid #a2d4df;
+  margin-left: 8em;
+  margin-right: 8em;
+  background-color: #ffffff;
+  box-shadow: 0 16px 6px rgb(43, 56, 59);
+  margin-bottom: 3em;
+}
+
+.orders {
+  padding: 1em 5em;
+  border-radius: 50px;
+  box-shadow: 0 10px 5px rgb(134, 87, 76);
+  margin-left: 5em;
+  margin-right: 5em;
+  background-color: #ffffff;
+  border-top: 3px solid #ea9682;
+  border-bottom: 3px solid #ea9682;
 }
 
 .user_modal_overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.user_title_container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  gap: 10px;
 }
 
-.user_info_title{
+.user_back_text{
   text-align: center;
+  font-size: 20px;
+  color: #333;
+  margin-top: 15px;
 }
 
-.user_order_title{
+.user_info_title {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+  margin-left: 22%;
+}
+
+.error_message {
+  color: #e74c3c;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.user_order_title {
   text-align: left;
+  font-size: 20px;
+  color: #333;
   margin-top: 40px;
 }
 
 .auth_button_close {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   cursor: pointer;
+  margin-left: 2em;
+  &:hover {
+    path{ stroke: rgb(255, 121, 94);}
+  }
 }
 
 label {
   display: block;
+  font-size: 16px;
   margin-bottom: 10px;
+  color: #333;
 }
 
 input[type="text"],
 input[type="email"] {
-  width: 80%;
-  padding: 5px;
+  width: calc(100% - 30px);
+  padding: 10px;
+  margin-bottom: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 16px;
 }
 
 input[type="text"] {
   mask: unset;
 }
 
+.user_edit_title{
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
 .user_info_text {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  font-size: clamp(0.9rem, 2vw, 1.3rem);
+  color: #555;
+  margin-top: 10px;
 }
 
 .user_info_edit_button {
-  background-color: #ff795e;
+  background-color: #5ec3dc;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+  width: 15em;
+  text-align: left;
+  &:hover {
+    background-color: #ff795e;
+  }
 }
 
 .user_info_save_button,
 .user_info_cancel_button {
-  background-color: #a2d4df;
+  background-color: #ea9682;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 16px;
   margin-right: 10px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #ff795e;
+  }
 }
 
-.user_info_save_button:hover,
-.user_info_cancel_button:hover {
-  background-color: rgba(31, 30, 22, 0.62);
-  transition: ease-in-out 200ms;
+.new_email_btn{
+  background-color: #ea9682;
+  color: white;
+  border: none;
+  padding: 8px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 11px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #ff795e;
+  }
 }
 
-.user_info_phone{
+.new_email_title{
+  margin-top: 1em;
+}
+
+.user_info_phone,
+.user_info_name,
+.user_info_email {
   margin-left: 10px;
-}
-
-.user_info_name{
-  margin-left: 40px;
-}
-
-.user_info_email{
-  margin-left: 37px;
 }
 
 .user_info_orders {
@@ -106,47 +177,99 @@ input[type="text"] {
 .user_info_order {
   border: 1px solid #ccc;
   border-radius: 4px;
-  padding: 10px;
+  padding: 15px;
   margin-bottom: 10px;
+  background-color: rgb(209, 239, 246);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .user_info_order_date,
 .user_info_order_total {
   font-weight: bold;
   margin-bottom: 5px;
+  color: #333;
 }
 
 .user_info_order_items {
   margin-top: 10px;
+  list-style: none;
+  padding: 0;
 }
 
 .user_info_order_item {
   margin-bottom: 5px;
+  margin-left: 5px;
+  display: flex;
+  align-items: center;
 }
 
 .user_info_order_item_name {
   font-weight: bold;
+  color: #555;
 }
 
 .user_info_order_item_details {
-  margin-left: 10px;
   font-size: 14px;
+  color: #777;
+  margin-left: 15px;
 }
 
 .user_info_logout_button {
-  background-color: rgba(162, 1, 0, 0.53);
+  background-color: #e74c3c;
   color: white;
   border: none;
-  padding: 5px 10px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 2em;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+
+.cancel_order_button{
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
   border-radius: 4px;
   cursor: pointer;
-  margin-top: 20px;
-  font-size: 1.1em;
+  margin: 5px;
+  font-size: 13px;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #c0392b;
+  }
+}
+
+.admin_button_container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.admin_panel_button{
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  padding: 15px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  transition: background-color 0.3s ease;
+  align-items: center;
+  &:hover {
+    background-color: #c0392b;
+  }
 }
 
 .user_info_loading {
   text-align: center;
   margin-top: 20px;
+  font-size: 18px;
+  color: #555;
 }
 
 .input_mask_container {
@@ -163,4 +286,233 @@ input[type="text"] {
 
 .input_mask_container input[type="text"] {
   padding-left: 30px;
+}
+
+.change_password_form {
+  padding: 20px;
+  border-radius: 8px;
+  margin-top: 20px;
+  margin-right: 2em;
+}
+
+.change_password_form h2 {
+  margin-bottom: 15px;
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
+  color: #333;
+}
+
+.change_password_form label {
+  display: block;
+  margin-bottom: 10px;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  color: #555;
+}
+
+.change_password_form input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+}
+
+.change_password_form button {
+  background-color: #ea9682;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.change_password_form button:hover {
+  background-color: #ff795e;
+  transition: background-color 0.3s;
+}
+
+.change_password_form .error_message {
+  color: red;
+  font-size: clamp(0.7rem, 2vw, 0.9rem);
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+.order_item_separator {
+  border: none;
+  border-top: 1px solid #626262;
+  margin: 10px 0;
+}
+
+@media (max-width: 1530px) {
+  .user_info_title{
+    margin-left: 15%;
+  }
+}
+
+@media (max-width: 1300px) {
+  .user_info_title{
+    margin-left: 10%;
+  }
+}
+
+@media (max-width: 1150px) {
+  .user_info_title{
+    margin-left: 5%;
+  }
+}
+
+@media (max-width: 950px) {
+  .user_info_title{
+    margin-left: -30%;
+    margin-top: 20%;
+  }
+
+  .user_info{
+    margin-left: 3em;
+    margin-right: 3em;
+  }
+
+  .orders{
+    margin-left: 2em;
+    margin-right: 2em;
+    padding: 1em 2em;
+  }
+
+  .user_title_container{
+    margin-top: -5em;
+  }
+
+  .admin_panel_button{
+    margin-bottom: 2em;
+  }
+}
+
+@media (max-width: 590px) {
+  .user_info_title{
+    margin-left: -50%;
+    margin-top: 25%;
+  }
+
+  .user_info{
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+
+  .user_info_save_button{
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .user_info_edit_button{
+    width: 100%;
+    text-align: center;
+  }
+
+  .new_email_btn{
+    width: 90%;
+  }
+
+  .change_password_form button {
+    width: 100%;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+
+  .user_info_text{
+    font-size: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .user_info{
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+
+  .orders{
+    margin-left: 1em;
+    margin-right: 1em;
+  }
+
+  .user_info_title{
+    margin-left: -60%;
+  }
+}
+
+@media (max-width: 430px) {
+  .user_info_title{
+    margin-left: -70%;
+    margin-top: 30%;
+  }
+
+  .change_password_form {
+    margin-right: 1em;
+    margin-left: -1em;
+  }
+
+  .change_password_form label {
+    font-size: 1em;
+  }
+
+  .change_password_form h2{
+    margin-left: 15px;
+  }
+
+  .change_password_form button {
+    padding: 10px 5px;
+    margin-right: 0;
+    margin-left: 0;
+    width: 110%;
+  }
+
+  .change_password_form .error_message {
+    font-size: 0.9em;
+  }
+
+  .orders{
+    padding: 1em 1em 2em;
+  }
+
+  .user_info_logout_button{
+    width: 80%;
+    margin: 2em;
+  }
+
+  .admin_panel_button{
+    margin-left: 2em;
+    margin-right: 2em;
+  }
+}
+
+@media (max-width: 380px) {
+  .user_info_title {
+    margin-left: -80%;
+    margin-top: 30%;
+    font-size: 1.3em;
+  }
+}
+
+@media (max-width: 350px) {
+  .user_info_title {
+    margin-left: -75%;
+    margin-top: 30%;
+    font-size: 1.2em;
+  }
+
+  .user_back_text{
+    font-size: 1em;
+  }
+
+  .user_info{
+    padding: 1em;
+  }
+}
+
+@media (max-width: 320px) {
+  .user_info_title {
+    margin-left: -80%;
+  }
 }
