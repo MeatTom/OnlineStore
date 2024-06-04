@@ -180,10 +180,20 @@ package Models {
 }
 
 package Validation {
-    class AuthValidation {
+    class auth {
         +regValidation: Array
         +loginValidation: Array
     }
+
+    class order {
+            +regValidation: Array
+            +loginValidation: Array
+        }
+
+        class user {
+                +regValidation: Array
+                +loginValidation: Array
+            }
 }
 
 package Routers {
@@ -271,7 +281,11 @@ package Admin {
     AdminJS -down-> Status
 }
 
-AuthValidation -down-> UserRouter : applies
+auth -down-> UserRouter : applies
+user -down-> UserRouter : applies
+order -down-> OrderRouter : applies
+
+
 
 StockController --> Stock : uses
 StockController --> Tovar : uses
