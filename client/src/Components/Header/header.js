@@ -62,7 +62,7 @@ function Header(props) {
     };
 
     React.useEffect(() => {
-        if (isRegistrationOpen || isUserInfoOpen) {
+        if (isRegistrationOpen || isUserInfoOpen || props.cartIsOpen) {
             document.body.style.overflow = "hidden";
         } else {
             document.body.style.overflow = "unset";
@@ -70,7 +70,7 @@ function Header(props) {
         return () => {
             document.body.style.overflow = "unset";
         };
-    }, [isRegistrationOpen, isUserInfoOpen]);
+    }, [isRegistrationOpen, isUserInfoOpen, props.cartIsOpen]);
 
     return (
         <header>

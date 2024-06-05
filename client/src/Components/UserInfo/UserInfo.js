@@ -199,10 +199,6 @@ const UserInfo = () => {
         return `${date.toLocaleDateString()} ${date.toLocaleTimeString()}`;
     };
 
-    const handleOpenCart = () => {
-        setCartIsOpen(true);
-    };
-
     const handleCancelPasswordChange = () => {
         setChangePasswordMode(false);
         setCurrentPassword('');
@@ -237,8 +233,8 @@ const UserInfo = () => {
 
     return (
         <div className={ModalStyle.user_modal}>
-            <Header onClickedCart={handleOpenCart}/>
-            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)}/>}
+            <Header onClickedCart={() => setCartIsOpen(true)} isError={isError} cartIsOpen={cartIsOpen}/>
+            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)} />}
             {user.isAdmin && (
                 <div className={ModalStyle.admin_button_container}>
                     <button className={ModalStyle.admin_panel_button} onClick={handleAdminPanel}>

@@ -35,9 +35,6 @@ const Favorites = () => {
         );
     }
 
-    const handleOpenCart = () => {
-        setCartIsOpen(true);
-    };
 
     const handleClose = () => {
         navigate("/");
@@ -48,8 +45,8 @@ const Favorites = () => {
             <ScrollToTop showUnder={300} style={{ zIndex: 1000, position: 'fixed', bottom: '2rem', right: '2rem' }}>
                 <span><img src="/statics/ButtonUp.png" alt="UP" /></span>
             </ScrollToTop>
-            <Header onClickedCart={handleOpenCart}/>
-            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)}/>}
+            <Header onClickedCart={() => setCartIsOpen(true)} isError={isError} cartIsOpen={cartIsOpen}/>
+            {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)} />}
             <div className={FavoriteStyle.fav_back_container}>
             <svg className={FavoriteStyle.button_back} onClick={handleClose} width="35" height="35"
                  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

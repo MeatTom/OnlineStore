@@ -8,9 +8,6 @@ import { useInView } from 'react-intersection-observer';
 const AboutUs = () => {
     const [cartIsOpen, setCartIsOpen] = useState(false);
 
-    const handleOpenCart = () => {
-        setCartIsOpen(true);
-    };
 
     const [refMission, inViewMission] = useInView({ triggerOnce: true });
     const [refTeam, inViewTeam] = useInView({ triggerOnce: true });
@@ -22,7 +19,7 @@ const AboutUs = () => {
             <ScrollToTop showUnder={200} style={{ zIndex: 1000, position: 'fixed', bottom: '2rem', right: '2rem' }}>
                 <span><img  src="/statics/ButtonUp.png" alt="UP" /></span>
             </ScrollToTop>
-            <Header onClickedCart={handleOpenCart} />
+            <Header onClickedCart={() => setCartIsOpen(true)} cartIsOpen={cartIsOpen}/>
             {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)} />}
             <div className={AboutUsStyle.header}>
                 <h1>О Нас</h1>

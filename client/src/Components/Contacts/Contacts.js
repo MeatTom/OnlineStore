@@ -6,13 +6,9 @@ import SideCart from "../SideCart/SideCart";
 const Contacts = () => {
     const [cartIsOpen, setCartIsOpen] = useState(false);
 
-    const handleOpenCart = () => {
-        setCartIsOpen(true);
-    };
-
     return (
         <div className={ContactsStyle.contacts}>
-            <Header onClickedCart={handleOpenCart} />
+            <Header onClickedCart={() => setCartIsOpen(true)} cartIsOpen={cartIsOpen}/>
             {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)} />}
             <div className={ContactsStyle.header}>
                 <h1>Контакты</h1>

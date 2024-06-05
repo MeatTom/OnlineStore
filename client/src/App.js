@@ -136,7 +136,7 @@ function App() {
             <ScrollToTop showUnder={300} style={{ zIndex: 1000, position: 'fixed', bottom: '2rem', right: '2rem' }}>
                 <span><img src="/statics/ButtonUp.png" alt="UP" /></span>
             </ScrollToTop>
-            <Header onClickedCart={() => setCartIsOpen(true)} isLoading={isLoading || loadingDelayed} isError={isError}/>
+            <Header onClickedCart={() => setCartIsOpen(true)} isLoading={isLoading || loadingDelayed} isError={isError} cartIsOpen={cartIsOpen}/>
             {cartIsOpen && <SideCart onClosedCart={() => setCartIsOpen(false)} />}
             {contentVisible && (
                 <div>
