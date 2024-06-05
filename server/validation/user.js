@@ -25,7 +25,7 @@ const validateUpdatePassword = [
     body('newPassword')
         .notEmpty().withMessage('Новый пароль обязателен')
         .isLength({ min: 5 }).withMessage('Пароль должен содержать не менее 5 символов')
-        .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[^\w\d\s:])[A-Za-z\d^\w\d\s:]+$/).withMessage('Пароль должен содержать как минимум одну латинскую букву, одну цифру и один специальный символ')
+        .matches(/^(?=.*[A-Za-z])(?=.*\d).*$/).withMessage('Пароль должен содержать как минимум одну цифру и одну латинскую букву')
 ];
 
 module.exports = {

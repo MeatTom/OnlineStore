@@ -174,11 +174,11 @@ const UserInfo = () => {
         const value = e.target.value;
         setNewPassword(value);
 
-        const isValidPassword = value.length >= 5 && /^(?=.*[A-Za-z])(?=.*\d)(?=.*[^\w\d\s:])[A-Za-z\d^\w\d\s:]+$/.test(value);
+        const isValidPassword = value.length >= 5 && /^(?=.*[A-Za-z])(?=.*\d).*$/.test(value);
 
         setPasswordValMessage(
             value && !isValidPassword
-                ? 'Пароль должен содержать не менее 5 символов, хотя бы одну латинскую букву, одну цифру и один специальный символ'
+                ? 'Пароль должен содержать не менее 5 символов, хотя бы одну цифру и латинские буквы'
                 : ''
         );
     };
