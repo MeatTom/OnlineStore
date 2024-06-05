@@ -231,7 +231,7 @@ const UserInfo = () => {
     }
 
     const handleAdminPanel = () => {
-        window.location.href = "http://localhost:5000/admin";
+        window.location.href = process.env.REACT_APP_URL_ADMIN;
     };
 
 
