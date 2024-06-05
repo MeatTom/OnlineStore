@@ -3,6 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.REACT_APP_URL_API,
     prepareHeaders: (headers) => {
+        headers.set("ngrok-skip-browser-warning", 'ngrok-skip-browser-warning');
         const token = localStorage.getItem('token');
         if (token) {
             headers.set('Authorization', `Bearer ${token}`);
