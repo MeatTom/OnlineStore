@@ -27,7 +27,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, DELETE, OPTIONS');
     next();
 });
-app.use(cors({ origin: '*' }));
+app.use(cors());
 app.use(express.json());
 
 
@@ -57,7 +57,6 @@ app.listen(PORT, (err) => {
     }
     console.log(`Server successfully started on port ${PORT}`);
 });
-
 
 
 

@@ -16,9 +16,6 @@ const Favorites = () => {
     const navigate = useNavigate();
     const { addNotification } = useNotification();
 
-    const token = localStorage.getItem('token')
-    console.log(token);
-
     const handleRemoveFavorite = async (itemId) => {
         try {
             await removeFavorite(itemId);

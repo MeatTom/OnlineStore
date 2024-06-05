@@ -24,8 +24,6 @@ function OrderModal({ products, onClose, isOpen }) {
     const [placeOrder, { isLoading: isPlacingOrder }] = usePlaceOrderMutation();
     const addressToken = process.env.REACT_APP_ADDRESS_TOKEN;
 
-    console.log(process.env.REACT_APP_ADDRESS_TOKEN);
-
     useEffect(() => {
         const token = localStorage.getItem('token');
         setIsUserRegistered(!!token);

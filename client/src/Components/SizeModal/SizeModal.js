@@ -61,8 +61,7 @@ function SizeModal({ isOpen, onClose, name, imageURL, price, currentItemId }) {
 
     const handleAddToCart = async () => {
         try {
-            const item = { id: Date.now(), name, imageURL, price };
-            console.log('Item added to cart:', item);
+
             setAddedToCart(true);
 
             if (selectedSize) {

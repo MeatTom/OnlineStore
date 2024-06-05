@@ -97,8 +97,7 @@ function App() {
             return;
         }
         try {
-            const { data } = await addToCart(item);
-            console.log('Added to cart:', data);
+            await addToCart(item);
         } catch (error) {
             console.error('Ошибка при добавлении товара в корзину:', error);
         }

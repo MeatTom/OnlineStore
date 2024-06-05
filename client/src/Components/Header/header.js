@@ -23,7 +23,6 @@ function Header(props) {
         } else {
             setIsRegistrationOpen(true);
         }
-        console.log(localStorage.getItem('token'));
     };
 
     const handleFavoriteClick = () => {

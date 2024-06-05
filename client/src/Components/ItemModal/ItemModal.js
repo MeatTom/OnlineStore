@@ -64,10 +64,6 @@ function ItemModal({ isOpen, onClose, name, imageURL, price, description, curren
 
     const handleAddToCart = async () => {
         try {
-            const item = { id: Date.now(), name, imageURL, price };
-
-            console.log('Item added to cart:', item);
-
 
             if (selectedSize) {
                 const token = localStorage.getItem('token');
