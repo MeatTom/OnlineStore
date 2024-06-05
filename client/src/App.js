@@ -160,7 +160,7 @@ function App() {
                                         name={item.name}
                                         price={item.price}
                                         description={item.description}
-                                        imageURL={item.image.replace(/\\/g, "/")}
+                                        imageURL={item.image.replace('http://localhost:5000/image_storage/', process.env.REACT_APP_URL_IMG)}
                                         onPlus={() => onAddToCartClick(item)}
                                         onAddToFavorite={() => handleAddFavorite(item.id)}
                                         onRemoveFavorite={() => handleRemoveFavorite(item.id)}
