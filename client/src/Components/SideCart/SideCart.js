@@ -125,7 +125,7 @@ function SideCart ({cartOpen, onClosedCart}) {
                                     const isMaxQuantityReached = availableQuantity && item.amount >= availableQuantity;
                                     return (
                                         <div key={uuidv4()} className={style.cartItem}>
-                                            <img src={item.image} alt="sock" width={200}/>
+                                            <img src={item.image.replace('http://localhost:5000/image_storage/', process.env.REACT_APP_URL_IMG)} alt="sock" width={200}/>
                                             <div className={style.cartContent}>
                                                 <p className={style.cartTitle}>{item.name}</p>
                                                 <b>Цена: {item.price} р.</b>
