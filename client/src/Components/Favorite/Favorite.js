@@ -67,7 +67,7 @@ const Favorites = () => {
                             name={favorite.Tovar.name}
                             price={favorite.Tovar.price}
                             description={favorite.Tovar.description}
-                            imageURL={favorite.Tovar.image.replace(/\\/g, "/")}
+                            imageURL={favorite.Tovar.image.replace('http://localhost:5000/image_storage/', process.env.REACT_APP_URL_IMG)}
                             onPlus={() => {
                             }}
                             onRemoveFavorite={() => handleRemoveFavorite(favorite.Tovar.id)}
