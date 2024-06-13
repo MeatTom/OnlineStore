@@ -43,6 +43,7 @@ const RegistrationForm = ({ isOpen, onClose }) => {
 
     const handleSendCode = async (e) => {
         e.preventDefault();
+        setErrorMessage('');
         if (!validateEmail(email)) {
             setErrorMessage('Пожалуйста, введите корректный email');
             return;
@@ -50,6 +51,7 @@ const RegistrationForm = ({ isOpen, onClose }) => {
         try {
             await sendCode(email).unwrap();
             setIsCodeSent(true);
+            setErrorMessage('');
         } catch (error) {
             if (error.status === 400 && error.data.error === 'Пользователь с таким email уже существует') {
                 setErrorMessage('Аккаунт с данным email уже зарегистрирован.');
@@ -249,7 +251,7 @@ const RegistrationForm = ({ isOpen, onClose }) => {
                             >
                                 {(inputProps) => <input
                                     type="text"
-                                    placeholder="Телефон"
+                                    placeholder="Телефон (необязательно)"
                                     {...inputProps}
                                 />}
                             </InputMask>

@@ -55,7 +55,7 @@ app.listen(PORT, (err) => {
     if (err){
         return console.log(err);
     }
-    console.log(`Server successfully started on port ${PORT}`);
+    console.log(`Сервер успешно запущен на порте: ${PORT}`);
 });
 
 

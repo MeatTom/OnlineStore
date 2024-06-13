@@ -11,25 +11,24 @@ const sendCode = async (req, res) => {
     const { email } = req.body;
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
     const hashedCode = await bcrypt.hash(verificationCode, 10);
-    const expiresAt = new Date(Date.now() + 10 * 60000); // код действует 10 минут
+    const expiresAt = new Date(Date.now() + 10 * 60000);
 
     try {
-        // Проверка на уникальность email
         const user = await User.findOne({ where: { email } });
         if (user) {
             return res.status(400).json({ error: 'Пользователь с таким email уже существует' });
         }
 
-        // Создание записи с кодом подтверждения
         await VerificationCode.create({
             email,
             code: hashedCode,
             expires_at: expiresAt,
         });
 
-        // Настройка и отправка email с кодом подтверждения
         const transporter = nodemailer.createTransport({
-            service: 'Yandex',
+            host: 'smtp.mail.ru',
+            port: 465,
+            secure: true,
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS,
@@ -37,10 +36,10 @@ const sendCode = async (req, res) => {
         });
 
         await transporter.sendMail({
-            from: "meattom@yandex.ru",
+            from: "socksheaven@mail.ru",
             to: email,
-            subject: 'Ваш код подтверждения',
-            text: `Ваш код подтверждения: ${verificationCode}`,
+            subject: 'SocksHeaven. Код подтверждения',
+            text: `Ваш код подтверждения почты на сайте SocksHeaven: ${verificationCode}`,
         });
 
         res.status(200).json({ message: 'Код подтверждения отправлен' });
@@ -74,7 +73,6 @@ const registration = async (req, res) => {
                 return res.status(400).json({ error: 'Код подтверждения истек' });
             }
 
-            // Удаление записи с кодом подтверждения
             await VerificationCode.destroy({ where: { email } });
 
         const salt = await bcrypt.genSalt(10);

@@ -4,7 +4,6 @@ const path = require('path');
 const fs = require('fs');
 const formidable = require('formidable');
 
-//Настройка хранилища файлов
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, './image_storage');
@@ -14,7 +13,6 @@ const storage = multer.diskStorage({
     },
 });
 
-//Проверка типа файлов
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
         cb(null, true);
@@ -23,7 +21,6 @@ const fileFilter = (req, file, cb) => {
     }
 };
 
-//Создание экземпляра multer
 const upload = multer({ storage, fileFilter });
 
 const addProduct = async (req, res) => {

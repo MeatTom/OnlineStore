@@ -110,6 +110,7 @@ function SizeModal({ isOpen, onClose, name, imageURL, price, currentItemId }) {
                 {sizesLoaded && stockLoaded && currentItemId ? (
                     stock
                         .filter(stockItem => stockItem.quantity > 0)
+                        .sort((a, b) => a.sizeId - b.sizeId)
                         .map((stockItem) => {
                             const size = sizes.find((size) => size.id === stockItem.sizeId);
                             return (

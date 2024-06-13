@@ -6,7 +6,6 @@ const router = express.Router();
 const validation = require('../validation/auth')
 const userValidation = require('../validation/user')
 
-//регистрация с валидацией
 router.post('/auth/register', validation.regValidation,  async (req, res,next) =>{
     const errors = validationResult(req)
     if (!errors.isEmpty()) {

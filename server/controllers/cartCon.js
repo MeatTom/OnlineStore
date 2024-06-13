@@ -1,4 +1,4 @@
-const { Cart, Tovar , Stock} = require('../models/db');
+const { Cart, Tovar, Stock } = require('../models/db');
 const jwt = require('jsonwebtoken');
 
 const verifyAuthToken = (token, res) => {
@@ -12,7 +12,6 @@ const verifyAuthToken = (token, res) => {
 
 const addToCart = async (item, req) => {
     try {
-        
         const { id } = item;
         const amount = 1;
 
@@ -40,10 +39,7 @@ const addToCart = async (item, req) => {
 
 const getCartItems = async (token, res) => {
     try {
-
         const userId = verifyAuthToken(token);
-
-
 
         const cartItems = await Cart.findAll({
             where: { userId },
@@ -89,7 +85,12 @@ const decrementCartItem = async (id) => {
             error.statusCode = 404;
             throw error;
         }
-        await cartItem.update({ amount: cartItem.amount - 1 });
+
+        if (cartItem.amount - 1 <= 0) {
+            await cartItem.destroy();
+        } else {
+            await cartItem.update({ amount: cartItem.amount - 1 });
+        }
     } catch (error) {
         if (!error.statusCode) {
             error.statusCode = 500;
@@ -172,7 +173,6 @@ const saveSizeToCart = async (req, res) => {
 };
 
 const clearCartForUser = async (token) => {
-
     const userId = verifyAuthToken(token);
 
     if (!token) {

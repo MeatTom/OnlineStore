@@ -167,6 +167,28 @@
 
 }
 
+@media (max-width: 1400px) and (min-width: 1300px) {
+  .item{
+    margin: 10px 10px 40px 10px;
+    width: 200px;
+  }
+
+  .image_wrapper{
+    max-width: 200px;
+    margin: 0 auto
+  }
+
+  .itemName {
+    width: 80%;
+  }
+
+  .itemDescription {
+    margin-left: 0;
+
+  }
+
+}
+
 @media (max-width: 1085px) {
   .item{
     margin: 15px 15px 50px 15px;
