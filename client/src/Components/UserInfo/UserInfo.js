@@ -147,9 +147,17 @@ const UserInfo = () => {
             setPasswordValMessage('');
         } catch (error) {
             console.error('Ошибка при смене пароля:', error);
-            setPasswordValMessage('Ошибка при смене пароля. Убедитесь, что текущий пароль верен.');
+
+            if (error.status === 400 && error.data.error === 'Новый пароль должен отличаться от старого') {
+                setPasswordValMessage('Новый пароль должен отличаться от старого.');
+            } else if (error.status === 400 && error.data.error === 'Неверный текущий пароль') {
+                setPasswordValMessage('Неверный текущий пароль.');
+            } else {
+                setPasswordValMessage('Ошибка при смене пароля. Убедитесь, что текущий пароль верен.');
+            }
         }
     };
+
 
     const handleSendCode = async () => {
         if (!validateEmail(newEmail)) {

@@ -262,6 +262,11 @@ const updateUserPassword = async (req, res) => {
             return res.status(400).json({ error: 'Неверный текущий пароль' });
         }
 
+        const isNewPasswordSameAsCurrent = await bcrypt.compare(newPassword, user.password);
+        if (isNewPasswordSameAsCurrent) {
+            return res.status(400).json({ error: 'Новый пароль должен отличаться от старого' });
+        }
+
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(newPassword, salt);
         await user.save();
