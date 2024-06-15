@@ -27,7 +27,7 @@
     background: #E5E5E5;
     position: fixed;
     width: 600px;
-    height: 620px;
+    height: 70%;
     border-radius: 10px;
     z-index: 1000;
     box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.1);
@@ -251,6 +251,132 @@
     }
 
 
+}
+
+@media (max-height: 800px) {
+  .sideCart {
+    .drawer_shadow {
+      .drawer {
+        .drawer_line {
+          width: 50%;
+          margin-bottom: 2em;
+        }
+      }
+    }
+  }
+}
+
+@media (max-height: 700px) {
+    .sideCart {
+    .drawer_shadow {
+      .drawer {
+        padding: 10px 8px 8px;
+
+        h1{
+        margin-bottom: 2px;
+        }
+
+        .drawer_line {
+          margin-top: 20px;
+          width: 55%;
+        }
+
+        .cartItem {
+          padding: 10px;
+        }
+
+        .ClearCartButton{
+            margin-bottom: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-height: 600px) {
+  .sideCart {
+    .drawer_shadow {
+      .drawer {
+        padding: 1px 8px 8px;
+
+        .drawer_line {
+          width: 45%;
+        }
+        .bottomCart{
+          margin-bottom: 6px;
+
+          p{
+            font-size: 24px;
+            line-height: 0;
+          }
+
+          .CheckoutButton{
+            p{
+              font-size: 16px;
+            }
+            img{
+              height: 20px;
+            }
+
+            height: 29px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-height: 500px) {
+  .sideCart {
+    .drawer_shadow {
+      .drawer {
+        height: 90%;
+      }
+    }
+  }
+}
+
+@media (max-height: 400px) {
+  .sideCart {
+    .drawer_shadow {
+      .drawer {
+        padding: 0 8px 8px;
+
+        .drawer_line {
+          width: 40%;
+        }
+
+        .ClearCartButton{
+          font-size: 14px;
+          height: 29px;
+        }
+
+        h1{
+          font-size: 22px;
+        }
+
+        .bottomCart{
+          margin-bottom: 5px;
+
+          p{
+            font-size: 18px;
+            line-height: 0;
+          }
+
+          .CheckoutButton{
+            p{
+              font-size: 14px;
+            }
+            img{
+              height: 20px;
+            }
+
+            height: 23px;
+          }
+        }
+      }
+    }
+  }
 }
 
 

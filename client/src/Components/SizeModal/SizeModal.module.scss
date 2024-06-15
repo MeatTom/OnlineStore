@@ -68,6 +68,7 @@
   margin: 5px;
   padding: 10px 15px;
   border: none;
+  border-radius: 15px;
   cursor: pointer;
   min-width: 80px;
   &.selected {
@@ -126,7 +127,6 @@
   background-color: #cccccc;
   color: #484848;
 }
-
 
 @media (max-width: 768px) {
 

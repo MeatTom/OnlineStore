@@ -54,17 +54,7 @@
       transform: translateX(50%);
     }
 
-    &.hidden {
-      display: none;
-    }
-
     &.animateLeft {
-      opacity: 1;
-      transform: translateX(0);
-      display: flex;
-    }
-
-    &.animateRight {
       opacity: 1;
       transform: translateX(0);
       display: flex;
