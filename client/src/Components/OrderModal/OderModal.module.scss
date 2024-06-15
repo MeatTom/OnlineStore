@@ -137,11 +137,22 @@
   }
 }
 
-@media (max-width: 410px) {
+@media (max-width: 438px) {
     .order_modal {
       button {
         width: 90%;
         margin-bottom: 10px;
       }
     }
+
+  .dadata {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    button{
+      background-color: #6b6b6b;
+      margin-left: -2em;
+      margin-bottom: 0.6em;
+      width: 100%;
+    }
+  }
 }
