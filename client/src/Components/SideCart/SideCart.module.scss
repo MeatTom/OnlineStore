@@ -422,6 +422,31 @@
     .drawer_shadow{
       .drawer{
         width: 290px;
+
+        .drawer_line {
+          position: relative;
+          left: -9.3em;
+          opacity: 0;
+        }
+
+        .bottomCart {
+          p{
+            font-size: 22px;
+            line-height: 0;
+          }
+
+          .CheckoutButton{
+            height: 30px;
+            p{
+              font-size: 18px;
+            }
+
+            img{
+              height: 20px;
+            }
+          }
+        }
+
       }
     }
   }
