@@ -253,7 +253,7 @@
 
 }
 
-@media (max-height: 800px) {
+@media (max-height: 800px){
   .sideCart {
     .drawer_shadow {
       .drawer {
@@ -395,8 +395,9 @@
           }
         }
 
-        .drawer_line{
-          display: none;
+        .drawer_line {
+          position: relative;
+          left: -12.7em;
         }
 
         .bottomCart {
