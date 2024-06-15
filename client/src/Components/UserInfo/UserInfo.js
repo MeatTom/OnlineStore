@@ -374,7 +374,10 @@ const UserInfo = () => {
                 <h2 className={ModalStyle.user_order_title}>Заказы:</h2>
                 {Array.isArray(orders.orders) && orders.orders.length > 0 ? (
                     <div className={ModalStyle.user_info_orders} style={{maxHeight: '380px', overflow: 'auto'}}>
-                        {orders.orders.map((order) => (
+                        {orders.orders
+                            .slice()
+                            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                            .map((order) => (
                             <div key={order.id} className={ModalStyle.user_info_order}>
                                 {order.Status.name === 'Новый' && <button className={ModalStyle.cancel_order_button}
                                                                           onClick={() => handleCancelOrder(order.id)}>Отменить
