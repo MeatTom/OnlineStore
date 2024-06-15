@@ -420,6 +420,11 @@
 @media (max-width: 450px) {
   .sideCart {
     .drawer_shadow {
+      .cartContent{
+        width: 85%;
+      }
+
+
       .drawer {
         width: 290px;
 
@@ -448,7 +453,7 @@
 
           b{
             margin-top: 10px;
-            margin-left: 17px;
+            margin-left: 28px;
           }
 
           .delButton {
