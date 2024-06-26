@@ -57,7 +57,7 @@ const Favorites = () => {
             </svg>
             <h3 className={FavoriteStyle.fav_back_text}>Вернуться на главную</h3>
             </div>
-            <h2>Избранное</h2>
+            <h4>Избранное</h4>
             {favorites && favorites.length > 0 ? (
                 <div className={FavoriteStyle.list}>
                     {favorites.map((favorite) => (
