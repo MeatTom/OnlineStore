@@ -19,9 +19,14 @@
   display: none;
 }
 
-h2{
+h1{
   text-align: center;
-  font-size: clamp(1.4rem, 2vw, 1.7rem);
+  font-size: clamp(1.7rem, 2vw, 2rem);
+}
+
+h2{
+
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
 }
 
 .code_message{
