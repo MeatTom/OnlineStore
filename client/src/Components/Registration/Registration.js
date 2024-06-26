@@ -206,7 +206,7 @@ const RegistrationForm = ({ isOpen, onClose }) => {
                         </form>
                     ) : (
                         <form className={ModalStyle.reg_form} onSubmit={handleRegistration}>
-                            <h2>Регистрация</h2>
+                            <h4>Регистрация</h4>
                             {errorMessage && (
                                 <p className={ModalStyle.reg_error_message}>{errorMessage}</p>
                             )}
