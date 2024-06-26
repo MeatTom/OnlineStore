@@ -131,7 +131,7 @@ function OrderModal({ products, onClose, isOpen }) {
                         </div>
                     ) : (
                         <>
-                            <h2>Оформление заказа</h2>
+                            <h4>Оформление заказа</h4>
                             <div className={ModalStyle.form_group}>
                                 <label className={ModalStyle.label}>Тип доставки:</label>
                                 {formErrors.deliveryType && <p className={ModalStyle.error_message}>{formErrors.deliveryType}</p>}
