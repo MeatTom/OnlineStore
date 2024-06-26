@@ -191,7 +191,7 @@ const RegistrationForm = ({ isOpen, onClose }) => {
                 <>
                     {!isCodeSent ? (
                         <form className={ModalStyle.reg_form} onSubmit={handleSendCode} noValidate>
-                            <h1>Регистрация</h1>
+                            <h4>Регистрация</h4>
                             <h2>Введите ваш email:</h2>
                             {errorMessage && (
                                 <p className={ModalStyle.reg_error_message}>{errorMessage}</p>
