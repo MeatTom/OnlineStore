@@ -117,8 +117,8 @@ function App() {
                 <Header isLoading={isLoading || loadingDelayed} isError={isError}/>
                 {isError && (
                     <div className="load_error">
-                    <p className="load_error_msg">Ошибка загрузки данных. Пожалуйста, попробуйте еще раз.</p>
-                    <button className="load_error_btn" onClick={() => refetch()}>Повторить попытку</button>
+                        <p className="load_error_msg">Ошибка загрузки данных. Пожалуйста, попробуйте еще раз.</p>
+                        <button className="load_error_btn" onClick={() => refetch()}>Повторить попытку</button>
                     </div>
                 )}
                 <Loading />
@@ -129,7 +129,10 @@ function App() {
     const minPrice = items && items.length > 0 ? Math.min(...items.map(item => item.price)) : 0;
     const maxPrice = items && items.length > 0 ? Math.max(...items.map(item => item.price)) : 1000;
 
-    const filteredItems = displayedItems.filter(item => item.name.toLowerCase().includes(searchBar.toLowerCase()));
+    const filteredItems = displayedItems.filter(item =>
+        item.name.toLowerCase().includes(searchBar.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchBar.toLowerCase())
+    );
 
     return (
         <div className="Wrapper">
