@@ -72,11 +72,11 @@ const AuthForm = ({ isOpen, onClose }) => {
                 </svg>
                 {isSuccess ? (
                     <div className={ModalStyle.auth_success_message}>
-                        <h1>Вход выполнен успешно!</h1>
+                        <h4>Вход выполнен успешно!</h4>
                     </div>
                 ) : (
                     <form className={ModalStyle.auth_form} onSubmit={handleAuthorization}>
-                        <h2>Вход</h2>
+                        <h4>Вход</h4>
                         {errorMessage && (
                             <div className={ModalStyle.auth_error_message}>{errorMessage}</div>
                         )}
